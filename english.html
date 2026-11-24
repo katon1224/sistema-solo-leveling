@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>English Master — Fluência Científica A1 ao B2</title>
+  <style>
+    /* =====================================================================
+       DESIGN TOKENS & BASE STYLES (100% CSS PURO — SEM CDNs EXTERNOS)
+       ===================================================================== */
+    :root {
+      --bg-base: #040817;
+      --bg-surface: #0b1228;
+      --bg-surface-2: #111a36;
+      --bg-surface-3: #182347;
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --border-strong: rgba(129, 140, 248, 0.35);
+
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --purple-500: #8b5cf6;
+      --sky-300: #7dd3fc;
+      --sky-400: #38bdf8;
+      --emerald-300: #6ee7b7;
+      --emerald-400: #34d399;
+      --emerald-600: #059669;
+      --amber-300: #fcd34d;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --rose-300: #fda4af;
+      --rose-400: #fb7185;
+      --rose-600: #e11d48;
+
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 26px;
+      --shadow-card: 0 12px 32px rgba(2, 6, 23, 0.45);
+      --shadow-glow: 0 8px 24px rgba(99, 102, 241, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 12% 0%, rgba(99, 102, 241, 0.16), transparent 42%),
+        radial-gradient(circle at 90% 18%, rgba(139, 92, 246, 0.12), transparent 38%),
+        radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.08), transparent 45%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070d1f; }
+    ::-webkit-scrollbar-thumb { background: #27345a; border-radius: 999px; }
+
+    button, input, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* =====================================================================
+       LAYOUT SHELL (SIDEBAR DESKTOP + BOTTOM NAV MOBILE)
+       ===================================================================== */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 268px;
+      background: rgba(7, 12, 29, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border-subtle);
+      flex-direction: column;
+      z-index: 30;
+    }
+
+    .sidebar-brand {
+      padding: 22px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--indigo-500), var(--purple-500), var(--emerald-400));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-glow);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+      text-align: left;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    .nav-btn.active {
+      background: rgba(99, 102, 241, 0.16);
+      border-color: rgba(129, 140, 248, 0.35);
+      color: #e0e7ff;
+    }
+
+    .nav-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .nav-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.25);
+      color: #c7d2fe;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mini-goal-box {
+      background: rgba(15, 23, 48, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+
+    .mini-goal-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      margin-bottom: 7px;
+    }
+
+    .mobile-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(7, 12, 29, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .streak-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--amber-300);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .main-wrap {
+      flex: 1;
+      width: 100%;
+      padding-bottom: 92px;
+    }
+
+    .main-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 32px;
+    }
+
+    .mobile-bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 35;
+      background: rgba(7, 12, 29, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .mob-nav-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 7px 4px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 0.67rem;
+      font-weight: 600;
+      transition: all 0.16s ease;
+    }
+
+    .mob-nav-btn.active {
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.16);
+    }
+
+    .mob-dot {
+      position: absolute;
+      top: 5px;
+      right: 18%;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--emerald-400);
+    }
+
+    @media (min-width: 860px) {
+      .sidebar { display: flex; }
+      .mobile-header { display: none; }
+      .mobile-bottom-nav { display: none; }
+      .main-wrap { margin-left: 268px; padding-bottom: 40px; }
+      .main-container { padding: 28px 32px 48px; }
+    }
+
+    /* =====================================================================
+       CARDS, BUTTONS, PROGRESS, TYPOGRAPHY
+       ===================================================================== */
+    .card {
+      background: rgba(11, 18, 40, 0.84);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stack-lg { display: flex; flex-direction: column; gap: 20px; }
+    .stack-md { display: flex; flex-direction: column; gap: 14px; }
+    .stack-sm { display: flex; flex-direction: column; gap: 10px; }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .row-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .h1-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .h2-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .h3-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .text-muted { color: var(--text-muted); font-size: 0.85rem; }
+    .text-sm { font-size: 0.84rem; }
+    .text-xs { font-size: 0.75rem; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .badge-indigo { background: rgba(99, 102, 241, 0.16); border-color: rgba(129, 140, 248, 0.35); color: #c7d2fe; }
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); border-color: rgba(52, 211, 153, 0.35); color: var(--emerald-300); }
+    .badge-sky { background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.35); color: var(--sky-300); }
+    .badge-amber { background: rgba(245, 158, 11, 0.15); border-color: rgba(251, 191, 36, 0.35); color: var(--amber-300); }
+    .badge-slate { background: rgba(148, 163, 184, 0.12); border-color: rgba(148, 163, 184, 0.22); color: var(--text-secondary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 700;
+      transition: transform 0.12s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--indigo-600), var(--purple-500));
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+    }
+    .btn-emerald:hover { filter: brightness(1.08); }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: #090d16;
+    }
+    .btn-amber:hover { filter: brightness(1.07); }
+
+    .btn-rose {
+      background: rgba(225, 29, 72, 0.18);
+      border: 1px solid rgba(251, 113, 133, 0.35);
+      color: var(--rose-300);
+    }
+    .btn-rose:hover { background: rgba(225, 29, 72, 0.28); }
+
+    .btn-secondary {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-surface-3);
+      color: #fff;
+      border-color: rgba(148, 163, 184, 0.3);
+    }
+
+    .btn-sm { padding: 7px 12px; font-size: 0.76rem; border-radius: 10px; }
+    .btn-icon { padding: 8px; border-radius: 10px; }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #070d20;
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--indigo-500), var(--sky-400), var(--emerald-400));
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    /* =====================================================================
+       TODAY TAB: STATS, DAY PICKER, PRESETS, SHIFTS & TIMERS
+       ===================================================================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    @media (min-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .stat-box {
+      padding: 13px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 52, 0.65);
+    }
+    .stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+    .stat-val { font-size: 1.15rem; font-weight: 800; margin-top: 4px; }
+
+    .day-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-top: 10px;
+    }
+
+    .day-pill {
+      flex: 0 0 auto;
+      min-width: 96px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-2);
+      text-align: left;
+      transition: all 0.16s ease;
+    }
+    .day-pill:hover { border-color: rgba(129, 140, 248, 0.45); }
+    .day-pill.active {
+      background: linear-gradient(135deg, var(--indigo-600), var(--purple-500));
+      border-color: rgba(199, 210, 254, 0.5);
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+    .day-pill-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; font-weight: 800; }
+    .day-pill-sub { font-size: 0.7rem; opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 92px; margin-top: 2px; }
+
+    .preset-btn {
+      padding: 8px 13px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.16s ease;
+    }
+    .preset-btn.active {
+      background: var(--indigo-600);
+      border-color: var(--indigo-400);
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+    .preset-tag {
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .shift-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .blocks-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 720px) {
+      .blocks-grid { grid-template-columns: repeat(2, 1fr); }
+      .blocks-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .block-card {
+      background: rgba(15, 23, 50, 0.76);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .block-card.done {
+      border-color: rgba(52, 211, 153, 0.42);
+      background: rgba(6, 78, 59, 0.22);
+    }
+    .block-card.running {
+      border-color: rgba(129, 140, 248, 0.65);
+      background: rgba(49, 46, 129, 0.25);
+    }
+
+    .timer-display {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 9px;
+      background: #060b1c;
+      border: 1px solid var(--border-subtle);
+      min-width: 68px;
+      text-align: center;
+    }
+
+    /* =====================================================================
+       SRS FLASHCARDS: 3D FLIP, CLICKABLE WORDS (0.6x), PRONUNCIATION BOX
+       ===================================================================== */
+    .filter-pill {
+      padding: 8px 13px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.16s ease;
+    }
+    .filter-pill.active-indigo { background: var(--indigo-600); border-color: var(--indigo-400); color: #fff; }
+    .filter-pill.active-amber { background: var(--amber-500); border-color: var(--amber-300); color: #090d16; }
+    .filter-pill.active-slate { background: #334155; border-color: #64748b; color: #fff; }
+
+    .fc-stage {
+      max-width: 620px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .fc-perspective {
+      perspective: 1100px;
+      width: 100%;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .fc-inner {
+      position: relative;
+      width: 100%;
+      min-height: 365px;
+      transform-style: preserve-3d;
+      transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fc-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .fc-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      background: linear-gradient(160deg, rgba(16, 25, 56, 0.96), rgba(10, 15, 34, 0.98));
+      border: 1px solid rgba(129, 140, 248, 0.32);
+      box-shadow: 0 20px 45px rgba(2, 6, 23, 0.65);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .fc-face.fc-back {
+      transform: rotateY(180deg);
+      border-color: rgba(52, 211, 153, 0.4);
+    }
+
+    .fc-main-phrase {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.3;
+      text-align: center;
+      color: #fff;
+    }
+
+    .fc-example {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .pron-pill {
+      display: inline-block;
+      margin: 6px auto 0;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--sky-300);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .tip-compact {
+      margin: 6px auto 0;
+      max-width: 480px;
+      padding: 7px 12px;
+      border-radius: 11px;
+      background: rgba(245, 158, 11, 0.11);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      color: #fde68a;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Clickable individual English word */
+    .word-clickable {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 0 3px;
+      margin: 0 -1px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    }
+    .word-clickable:hover {
+      background: rgba(129, 140, 248, 0.26);
+      color: #e0e7ff;
+    }
+    .word-clickable.word-speaking {
+      background: rgba(56, 189, 248, 0.32) !important;
+      color: #bae6fd !important;
+      transform: scale(1.07);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.28);
+    }
+
+    .rating-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+      transition: opacity 0.25s ease;
+    }
+    .rating-grid.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .rate-btn {
+      padding: 12px 8px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-weight: 800;
+      font-size: 0.86rem;
+      border: 1px solid transparent;
+    }
+    .rate-btn small { font-size: 0.68rem; font-weight: 600; opacity: 0.8; }
+    .rate-hard { background: rgba(225, 29, 72, 0.14); border-color: rgba(251, 113, 133, 0.35); color: var(--rose-300); }
+    .rate-good { background: rgba(99, 102, 241, 0.18); border-color: rgba(129, 140, 248, 0.42); color: #c7d2fe; }
+    .rate-easy { background: rgba(16, 185, 129, 0.16); border-color: rgba(52, 211, 153, 0.4); color: var(--emerald-300); }
+
+    .deck-list {
+      max-height: 290px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 4px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .deck-item:last-child { border-bottom: none; }
+
+    /* =====================================================================
+       INPUT & SHADOWING TAB
+       ===================================================================== */
+    .chunks-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 720px) {
+      .chunks-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .chunk-card {
+      background: rgba(15, 23, 50, 0.78);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .bus-banner {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(56, 189, 248, 0.11);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      color: #e0f2fe;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .dialogue-line {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 16, 36, 0.8);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dialogue-line.user-line {
+      background: rgba(18, 28, 60, 0.85);
+      margin-left: 14px;
+    }
+    .dialogue-line.other-line {
+      margin-right: 14px;
+    }
+    .dialogue-line.speaking-active {
+      border-color: rgba(129, 140, 248, 0.85);
+      background: rgba(79, 70, 229, 0.22);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+    }
+
+    .toggle-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: 11px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .toggle-chip.on {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: var(--sky-300);
+    }
+    .toggle-chip.on-indigo {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(129, 140, 248, 0.5);
+      color: #c7d2fe;
+    }
+
+    /* =====================================================================
+       TUTOR IA & ROADMAP
+       ===================================================================== */
+    .prompt-box {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: #050a1a;
+      border: 1px solid var(--border-subtle);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.77rem;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      line-height: 1.55;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: #060b1d;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--indigo-400);
+    }
+    .form-label {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+
+    .level-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .level-badge.active {
+      background: linear-gradient(135deg, var(--indigo-500), var(--emerald-400));
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+    .level-badge.locked {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+    }
+
+    /* =====================================================================
+       MODALS & TOASTS
+       ===================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(2, 6, 23, 0.82);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-backdrop.hidden { display: none; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 480px;
+      background: #0c142e;
+      border: 1px solid var(--border-strong);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .toast-wrap {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 80;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 340px;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      pointer-events: auto;
+      padding: 11px 14px;
+      border-radius: 13px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      animation: fadeSlide 0.22s ease;
+    }
+    .toast-success { background: rgba(6, 78, 59, 0.94); border-color: rgba(52, 211, 153, 0.45); color: #d1fae5; }
+    .toast-info { background: rgba(30, 27, 75, 0.94); border-color: rgba(129, 140, 248, 0.45); color: #e0e7ff; }
+    .toast-warning { background: rgba(120, 53, 15, 0.94); border-color: rgba(251, 191, 36, 0.45); color: #fef3c7; }
+    .toast-error { background: rgba(136, 19, 55, 0.94); border-color: rgba(251, 113, 133, 0.45); color: #ffe4e6; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">English Master</div>
+          <div class="brand-sub">Fluência Científica A1–B2</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="desktop-nav"></nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-goal-box">
+          <div class="mini-goal-top">
+            <span class="text-muted" style="font-size:0.72rem;">Meta 600h (B2)</span>
+            <strong id="sidebar-hours" style="color:var(--emerald-400);">0.0h / 600h</strong>
+          </div>
+          <div class="progress-track" style="height:7px;">
+            <div id="sidebar-hours-bar" class="progress-fill" style="width:0%;"></div>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm" data-action="open-backup" style="width:100%;">
+          💾 Backup / Sincronizar JSON
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="main-wrap">
+      <!-- MOBILE HEADER -->
+      <header class="mobile-header">
+        <div class="mobile-header-left">
+          <div class="brand-icon" style="width:34px;height:34px;border-radius:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div>
+            <div class="brand-title" style="font-size:0.95rem;">English Master</div>
+            <div class="brand-sub" id="mobile-header-sub">A1 • Dia 1 • 2h35/dia</div>
+          </div>
+        </div>
+        <div class="mobile-header-right">
+          <div class="streak-pill" title="Sequência de dias">🔥 <span id="mobile-streak">0</span></div>
+          <button class="btn btn-secondary btn-icon" data-action="open-backup" aria-label="Backup JSON">💾</button>
+        </div>
+      </header>
+
+      <!-- DYNAMIC TAB CONTENT -->
+      <main class="main-container" id="app-content"></main>
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav" id="mobile-nav"></nav>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-wrap"></div>
+
+  <!-- MODAL: NEW FLASHCARD -->
+  <div id="modal-new-card" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="row-between" style="margin-bottom:14px;">
+        <h3 class="h2-title">+ Novo Flashcard (SRS)</h3>
+        <button class="btn btn-secondary btn-icon" data-action="close-new-card" aria-label="Fechar">✕</button>
+      </div>
+      <form id="form-new-card" class="stack-sm">
+        <div>
+          <label class="form-label" for="new-card-en">Chunk / Frase em Inglês *</label>
+          <input class="form-input" id="new-card-en" type="text" required placeholder="Ex: Could I have a coffee, please?" />
+        </div>
+        <div>
+          <label class="form-label" for="new-card-example">Exemplo em Contexto (Inglês)</label>
+          <input class="form-input" id="new-card-example" type="text" placeholder="Ex: Good morning! Could I have a coffee, please?" />
+        </div>
+        <div>
+          <label class="form-label" for="new-card-pt">Significado Natural em Português *</label>
+          <input class="form-input" id="new-card-pt" type="text" required placeholder="Ex: Eu poderia pedir um café, por favor?" />
+        </div>
+        <div>
+          <label class="form-label" for="new-card-pron">Pronúncia simplificada (Opcional)</label>
+          <input class="form-input" id="new-card-pron" type="text" placeholder="Ex: Cû-rai rév a có-fi, plíz?" />
+        </div>
+        <div>
+          <label class="form-label" for="new-card-tip">Dica / Letras Mudas (Opcional)</label>
+          <input class="form-input" id="new-card-tip" type="text" placeholder="Ex: O 'L' em could é mudo: pronuncia-se 'cûd'." />
+        </div>
+        <div class="row-wrap" style="justify-content:flex-end;margin-top:6px;">
+          <button type="button" class="btn btn-secondary btn-sm" data-action="close-new-card">Cancelar</button>
+          <button type="submit" class="btn btn-primary btn-sm">Salvar Flashcard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: BACKUP JSON -->
+  <div id="modal-backup" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="row-between" style="margin-bottom:10px;">
+        <h3 class="h2-title">💾 Backup e Sincronização (JSON)</h3>
+        <button class="btn btn-secondary btn-icon" data-action="close-backup" aria-label="Fechar">✕</button>
+      </div>
+      <p class="text-muted" style="margin-bottom:16px;">
+        Seu progresso fica salvo 100% grátis neste navegador. Exporte o arquivo JSON para levar seu streak e flashcards do PC para o celular (ou vice-versa).
+      </p>
+      <div class="row-wrap" style="margin-bottom:16px;">
+        <button class="btn btn-primary" data-action="export-backup" style="flex:1;">⬇️ Exportar Backup (.json)</button>
+        <label class="btn btn-secondary" style="flex:1;cursor:pointer;">
+          ⬆️ Importar Backup (.json)
+          <input type="file" id="modal-import-file" accept=".json" class="hidden" />
+        </label>
+      </div>
+      <div style="border-top:1px solid var(--border-subtle);padding-top:14px;" class="row-between">
+        <span class="text-xs text-muted">Deseja apagar tudo e recomeçar?</span>
+        <button class="btn btn-rose btn-sm" data-action="ask-reset">Resetar Dados</button>
+      </div>
+      <div id="reset-confirm-box" class="hidden" style="margin-top:12px;padding:12px;border-radius:12px;background:rgba(136,19,55,0.28);border:1px solid rgba(251,113,133,0.35);">
+        <p class="text-xs" style="color:var(--rose-300);margin-bottom:10px;">Tem certeza? Isso apagará seu streak, blocos concluídos e cartões personalizados.</p>
+        <div class="row-wrap" style="justify-content:flex-end;">
+          <button class="btn btn-secondary btn-sm" data-action="cancel-reset">Cancelar</button>
+          <button class="btn btn-rose btn-sm" data-action="confirm-reset">Sim, Resetar Tudo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* =====================================================================
+         1. HTML ESCAPING & SAFE HELPERS
+         ===================================================================== */
+      function escapeHtml(str) {
+        return String(str == null ? "" : str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function renderClickableWords(text) {
+        if (!text) return "";
+        return String(text).split(/(\s+)/).map(function (token) {
+          if (/^\s+$/.test(token)) return token;
+          var safeDisplay = escapeHtml(token);
+          var safeData = escapeHtml(token);
+          return '<span class="word-clickable" data-action="speak-word" data-word="' + safeData + '" title="Toque para ouvir devagar (0.6x)">' + safeDisplay + '</span>';
+        }).join("");
+      }
+
+      function getTodayDateString() {
+        var now = new Date();
+        var y = now.getFullYear();
+        var m = String(now.getMonth() + 1).padStart(2, "0");
+        var d = String(now.getDate()).padStart(2, "0");
+        return y + "-" + m + "-" + d;
+      }
+
+      function formatMinutesAsHours(totalMin) {
+        var h = Math.floor(totalMin / 60);
+        var m = totalMin % 60;
+        if (h === 0) return m + "min";
+        if (m === 0) return h + "h";
+        return h + "h" + String(m).padStart(2, "0");
+      }
+
+      function calculateForecastText(targetHours, dailyMinutes) {
+        var safeMin = Math.max(15, Number(dailyMinutes) || 60);
+        var days = targetHours / (safeMin / 60);
+        var months = days / 30;
+        if (months < 1) {
+          var weeks = Math.max(1, Math.round(days / 7));
+          return "~" + weeks + (weeks === 1 ? " semana" : " semanas");
+        }
+        return "~" + months.toFixed(1).replace(".", ",") + " meses";
+      }
+
+      function formatTime(seconds) {
+        var s = Math.max(0, Math.floor(seconds));
+        var m = Math.floor(s / 60);
+        var rem = s % 60;
+        return String(m).padStart(2, "0") + ":" + String(rem).padStart(2, "0");
+      }
+
+      /* =====================================================================
+         2. PRE-LOADED 10 ESSENTIAL A1 FLASHCARDS (WITH PRONUNCIATION & TIPS)
+         ===================================================================== */
+      var INITIAL_FLASHCARDS = [
+        {
+          id: "fc-1",
+          en: "What about you?",
+          example: "I'm doing great, thanks. What about you?",
+          pt: "E você? / E quanto a você?",
+          pronunciation: "Uó-ra-báut iú?",
+          tip: "Conexão: 'What about' junta os sons e soa quase como 'uó-ra-báut'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-2",
+          en: "Nice to meet you",
+          example: "Hi, I'm Lucas. Nice to meet you!",
+          pt: "Prazer em conhecer você",
+          pronunciation: "Náis tu mít iú",
+          tip: "Conexão: na fala rápida, 'meet you' se junta e soa quase como 'mí-tchu'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-3",
+          en: "I'm looking forward to...",
+          example: "I'm looking forward to our next class!",
+          pt: "Estou ansioso para / Mal posso esperar por...",
+          pronunciation: "Áim lû-kin fór-uárd tu...",
+          tip: "O 'g' final de 'looking' fica bem suave. Se vier verbo depois, use -ing (ex: seeing you).",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-4",
+          en: "Could I have a coffee, please?",
+          example: "Good morning! Could I have a coffee, please?",
+          pt: "Eu poderia pedir um café, por favor?",
+          pronunciation: "Cû-rai rév a có-fi, plíz?",
+          tip: "Letra muda: o 'L' em 'could' é totalmente mudo — pronuncia-se 'cûd'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-5",
+          en: "What do you do for a living?",
+          example: "So, what do you do for a living?",
+          pt: "Com o que você trabalha? / O que faz da vida?",
+          pronunciation: "Uó-du-iú dú fór a lí-vin?",
+          tip: "Conexão: 'What do you' se funde em 'uó-du-iú' na fala natural.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-6",
+          en: "How's it going?",
+          example: "Hey there! How's it going today?",
+          pt: "Como vão as coisas? / Tudo bem?",
+          pronunciation: "Ráuz it gôu-in?",
+          tip: "Conexão: 'How's it' emenda em 'ráuzit'. Muito mais natural do que 'How are you?'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-7",
+          en: "I'm on my way",
+          example: "Just left home, I'm on my way!",
+          pt: "Estou a caminho / Já estou indo",
+          pronunciation: "Áim ón mái uêi",
+          tip: "Conexão: 'I'm on' junta em 'ái-món'. O 'ay' de 'way' tem som de 'êi'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-8",
+          en: "Could you repeat that, please?",
+          example: "Sorry, it's noisy here. Could you repeat that, please?",
+          pt: "Você poderia repetir isso, por favor?",
+          pronunciation: "Cû-diú ri-pít dét, plíz?",
+          tip: "Letra muda + Conexão: 'could' (sem 'L') + 'you' emenda em 'cû-diú'.",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-9",
+          en: "It makes sense",
+          example: "Oh, now I understand. It makes sense!",
+          pt: "Faz sentido",
+          pronunciation: "It mêiks séns",
+          tip: "Conexão: o 's' final de 'makes' se funde com o 's' de 'sense' (mêik-séns).",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        },
+        {
+          id: "fc-10",
+          en: "See you later",
+          example: "Alright, I gotta go now. See you later!",
+          pt: "Até mais tarde / Te vejo depois",
+          pronunciation: "Sí iú lêi-râr",
+          tip: "No inglês americano, o 't' entre vogais em 'later' soa como um 'r' suave (lêi-râr).",
+          interval: 0, reps: 0, nextReview: 0, isHard: false
+        }
+      ];
+
+      /* =====================================================================
+         3. MODULE 1 (A1) — ALL 7 DAYS (4 CHUNKS + SHORT DIALOGUE EACH)
+         ===================================================================== */
+      var MODULE_1_DAYS = [
+        {
+          day: 1,
+          title: "Apresentações e Origem",
+          shortTitle: "Apresentações",
+          focus: "Quebrar o gelo, dizer quem você é, de onde vem e reagir naturalmente.",
+          roleplayTitle: "Evento Internacional de Networking",
+          roleplayScenario: "Você chegou em um evento casual de tecnologia. O Tutor IA é Alex, de Chicago, que puxa assunto com você na fila do café.",
+          chunks: [
+            { en: "Nice to meet you", example: "Hi, I'm Lucas. Nice to meet you!", pt: "Prazer em conhecer você", pronunciation: "Náis tu mít iú", tip: "Conexão: 'meet you' emenda e soa quase como 'mí-tchu'." },
+            { en: "I'm from Brazil", example: "I'm from Brazil, specifically São Paulo.", pt: "Eu sou do Brasil", pronunciation: "Áim frôm Bra-zíl", tip: "Sempre contraia 'I am' para 'I'm' (áim) para soar natural." },
+            { en: "How's it going?", example: "Hey! How's it going today?", pt: "Como vão as coisas? / Tudo bem?", pronunciation: "Ráuz it gôu-in?", tip: "Conexão: 'How's it' junta em 'ráuzit' e o 'g' final quase some." },
+            { en: "What about you?", example: "I'm doing great, thanks. What about you?", pt: "E você? / E quanto a você?", pronunciation: "Uó-ra-báut iú?", tip: "Conexão: 'What about' junta os sons em 'uó-ra-báut'." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Alex", en: "Hey there! How's it going?", pron: "Rêi dér! Ráuz it gôu-in?", pt: "Oi! Como vão as coisas?" },
+            { speaker: "B", name: "Você", en: "Hey! I'm doing great, thanks. What about you?", pron: "Rêi! Áim dú-in grêit, tênks. Uó-ra-báut iú?", pt: "Oi! Estou ótimo, obrigado. E você?" },
+            { speaker: "A", name: "Alex", en: "Pretty good! I'm Alex. Where are you from?", pron: "Prí-ri gûd! Áim Á-leks. Uér ár iú frôm?", pt: "Muito bem! Eu sou o Alex. De onde você é?" },
+            { speaker: "B", name: "Você", en: "Nice to meet you, Alex! I'm from Brazil.", pron: "Náis tu mít iú, Á-leks! Áim frôm Bra-zíl.", pt: "Prazer em te conhecer, Alex! Eu sou do Brasil." },
+            { speaker: "A", name: "Alex", en: "Oh, awesome! I'd love to visit Brazil someday.", pron: "Ôu, ó-sâm! Áid lâv tu ví-zit Bra-zíl sâm-dêi.", pt: "Ah, incrível! Eu adoraria visitar o Brasil um dia." }
+          ]
+        },
+        {
+          day: 2,
+          title: "Pedindo Café e Comida",
+          shortTitle: "Café & Comida",
+          focus: "Fazer pedidos educados em cafeterias e restaurantes sem soar robótico.",
+          roleplayTitle: "Cafeteria em Nova York",
+          roleplayScenario: "Você entrou em uma cafeteria movimentada. O Tutor IA é o barista (Sam) e pergunta o que você quer pedir, o tamanho e se é para viagem.",
+          chunks: [
+            { en: "Could I have a coffee, please?", example: "Hi! Could I have a medium coffee, please?", pt: "Eu poderia pedir um café, por favor?", pronunciation: "Cû-rai rév a có-fi, plíz?", tip: "Letra muda: o 'L' em 'could' não se pronuncia (soa 'cûd')." },
+            { en: "For here or to go?", example: "Would you like that for here or to go?", pt: "Para comer aqui ou para viagem?", pronunciation: "Fór rír ór tu gôu?", tip: "O 'H' em 'here' tem som de 'R' suave (rír)." },
+            { en: "I'll take it to go", example: "I'll take it to go, please. I'm in a hurry.", pt: "Vou levar para viagem", pronunciation: "Ául têik it tu gôu", tip: "Conexão: 'take it' emenda quase como 'têi-kit'." },
+            { en: "That's all, thank you", example: "No, that's all, thank you. How much is it?", pt: "É só isso, obrigado", pronunciation: "Déts ól, tênk iú", tip: "Conexão: 'That's all' junta em 'détsól'." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Barista", en: "Good morning! What can I get for you today?", pron: "Gûd mór-nin! Uót ken ái guét fór iú tu-dêi?", pt: "Bom dia! O que posso preparar para você hoje?" },
+            { speaker: "B", name: "Você", en: "Good morning! Could I have a coffee, please?", pron: "Gûd mór-nin! Cû-rai rév a có-fi, plíz?", pt: "Bom dia! Eu poderia pedir um café, por favor?" },
+            { speaker: "A", name: "Barista", en: "Sure thing! Is that for here or to go?", pron: "Chûr tin! Iz dét fór rír ór tu gôu?", pt: "Com certeza! É para aqui ou para viagem?" },
+            { speaker: "B", name: "Você", en: "I'll take it to go, please.", pron: "Ául têik it tu gôu, plíz.", pt: "Vou levar para viagem, por favor." },
+            { speaker: "A", name: "Barista", en: "Alright! Anything else for you?", pron: "Ól-ráit! É-ni-tin éls fór iú?", pt: "Certo! Mais alguma coisa?" },
+            { speaker: "B", name: "Você", en: "That's all, thank you!", pron: "Déts ól, tênk iú!", pt: "É só isso, obrigado!" }
+          ]
+        },
+        {
+          day: 3,
+          title: "Rotina Diária e Horários",
+          shortTitle: "Rotina & Horas",
+          focus: "Descrever seu dia a dia, horários de treino, ônibus, estudo e trabalho.",
+          roleplayTitle: "Conversa com Colega de Apartamento",
+          roleplayScenario: "Você está dividindo apartamento num intercâmbio. O Tutor IA é seu roommate (Jordan) e vocês conversam sobre a rotina da semana.",
+          chunks: [
+            { en: "I usually wake up at...", example: "I usually wake up at 6 AM on weekdays.", pt: "Eu geralmente acordo às...", pronunciation: "Ái iú-ju-a-li uêik âp ét...", tip: "Conexão: 'wake up at' emenda em 'uêi-kâ-pét'." },
+            { en: "I work out in the morning", example: "I try to work out in the morning before work.", pt: "Eu treino / malho de manhã", pronunciation: "Ái uârk áut in dâ mór-nin", tip: "Conexão: 'work out' soa junto como 'uâr-káut'." },
+            { en: "In my free time", example: "In my free time, I study English and work on projects.", pt: "No meu tempo livre", pronunciation: "In mái frí táim", tip: "Letra muda: o 'e' final de 'time' é mudo (táim)." },
+            { en: "Before going to bed", example: "I review my flashcards before going to bed.", pt: "Antes de ir dormir", pronunciation: "Bi-fór gôu-in tu béd", tip: "Letra muda: o 'e' final de 'before' é mudo (bi-fór)." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Jordan", en: "So, what does your typical day look like?", pron: "Sôu, uót dâz iór tí-pi-cal dêi lûk láik?", pt: "Então, como é o seu dia típico?" },
+            { speaker: "B", name: "Você", en: "Well, I usually wake up at 5:30 and take the bus.", pron: "Uél, ái iú-ju-a-li uêik âp ét fáiv târ-ri énd têik dâ bâs.", pt: "Bem, eu geralmente acordo às 5:30 e pego o ônibus." },
+            { speaker: "A", name: "Jordan", en: "That's early! What do you do in your free time?", pron: "Déts âr-li! Uó-du-iú dú in iór frí táim?", pt: "Isso é cedo! O que você faz no seu tempo livre?" },
+            { speaker: "B", name: "Você", en: "In my free time, I work out and study English every day.", pron: "In mái frí táim, ái uârk áut énd stâ-di Ín-glich é-vri dêi.", pt: "No meu tempo livre, eu treino e estudo inglês todo dia." },
+            { speaker: "A", name: "Jordan", en: "That's great discipline! I practice before going to bed too.", pron: "Déts grêit dí-si-plin! Ái prék-tis bi-fór gôu-in tu béd tú.", pt: "Ótima disciplina! Eu pratico antes de dormir também." }
+          ]
+        },
+        {
+          day: 4,
+          title: "Trabalho e Projetos",
+          shortTitle: "Trabalho",
+          focus: "Falar sobre sua profissão, projetos paralelos e objetivos.",
+          roleplayTitle: "Bate-papo em um Coworking",
+          roleplayScenario: "Você está no notebook em um coworking. O Tutor IA é Taylor, empreendedora digital, que pergunta com o que você trabalha.",
+          chunks: [
+            { en: "What do you do for a living?", example: "So, what do you do for a living?", pt: "Com o que você trabalha?", pronunciation: "Uó-du-iú dú fór a lí-vin?", tip: "Conexão: 'What do you' se funde em 'uó-du-iú'." },
+            { en: "I'm working on a project", example: "Right now, I'm working on a new online project.", pt: "Estou trabalhando em um projeto", pronunciation: "Áim uâr-kin ón a pró-djekt", tip: "O 'g' final de 'working' fica bem suave (uâr-kin)." },
+            { en: "I'm looking forward to...", example: "I'm looking forward to launching it this year.", pt: "Estou ansioso para / na expectativa de...", pronunciation: "Áim lû-kin fór-uárd tu...", tip: "Em 'looking', o 'oo' tem som de 'u' curto (lû-kin)." },
+            { en: "That sounds really interesting", example: "Wow, that sounds really interesting!", pt: "Isso parece muito interessante", pronunciation: "Dét sáundz rí-li ín-tres-tin", tip: "Letra muda: em 'interesting', o segundo 'e' quase some (ín-tres-tin)." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Taylor", en: "Hey! What do you do for a living?", pron: "Rêi! Uó-du-iú dú fór a lí-vin?", pt: "Oi! Com o que você trabalha?" },
+            { speaker: "B", name: "Você", en: "I work full-time, and I'm working on a project online too.", pron: "Ái uârk fûl-táim, énd áim uâr-kin ón a pró-djekt ón-láin tú.", pt: "Eu trabalho em tempo integral e estou trabalhando em um projeto online também." },
+            { speaker: "A", name: "Taylor", en: "That sounds really interesting! Is it going well?", pron: "Dét sáundz rí-li ín-tres-tin! Iz it gôu-in uél?", pt: "Isso parece muito interessante! Está indo bem?" },
+            { speaker: "B", name: "Você", en: "Yes, step by step! I'm looking forward to growing it.", pron: "Iés, stép bái stép! Áim lû-kin fór-uárd tu grôu-in it.", pt: "Sim, passo a passo! Estou ansioso para fazer isso crescer." },
+            { speaker: "A", name: "Taylor", en: "Good luck with that! See you later.", pron: "Gûd lâk uíf dét! Sí iú lêi-râr.", pt: "Boa sorte com isso! Até mais tarde." }
+          ]
+        },
+        {
+          day: 5,
+          title: "Pedindo Ajuda e Direções",
+          shortTitle: "Direções",
+          focus: "Pedir informações na rua, entender direções simples e pedir para falar devagar.",
+          roleplayTitle: "Encontrando o Metrô no Centro",
+          roleplayScenario: "A bateria do celular acabou durante uma viagem. O Tutor IA é um morador local simpático (Chris) que te ajuda a achar o metrô.",
+          chunks: [
+            { en: "Excuse me, could you help me?", example: "Excuse me, could you help me for a second?", pt: "Com licença, você poderia me ajudar?", pronunciation: "Eks-kiúz mi, cû-diú rélp mi?", tip: "Letra muda + Conexão: 'could' (sem 'L') + 'you' = 'cû-diú'." },
+            { en: "How do I get to...?", example: "How do I get to the subway station?", pt: "Como eu chego até...?", pronunciation: "Ráu du ái guét tu...?", tip: "Conexão: 'get to' junta os dois 'T' em um só (gué-tu)." },
+            { en: "Go straight ahead", example: "Go straight ahead for two blocks and turn right.", pt: "Siga reto em frente", pronunciation: "Gôu strêit a-réd", tip: "Letras mudas: o 'gh' em 'straight' é 100% mudo (soa 'strêit')." },
+            { en: "Could you speak a bit slower?", example: "Sorry, could you speak a bit slower, please?", pt: "Você poderia falar um pouco mais devagar?", pronunciation: "Cû-diú spík a bít slôu-âr?", tip: "Letra muda: o 'L' em 'could' é mudo (cûd)." }
+          ],
+          dialogue: [
+            { speaker: "B", name: "Você", en: "Excuse me, could you help me?", pron: "Eks-kiúz mi, cû-diú rélp mi?", pt: "Com licença, você poderia me ajudar?" },
+            { speaker: "A", name: "Chris", en: "Sure! Where are you trying to go?", pron: "Chûr! Uér ár iú trái-in tu gôu?", pt: "Claro! Para onde você está tentando ir?" },
+            { speaker: "B", name: "Você", en: "How do I get to Central Station from here?", pron: "Ráu du ái guét tu Sén-tral Stêi-chân frôm rír?", pt: "Como eu chego na Estação Central daqui?" },
+            { speaker: "A", name: "Chris", en: "Go straight ahead for two blocks, then turn right.", pron: "Gôu strêit a-réd fór tú blóks, dén târn ráit.", pt: "Siga reto por dois quarteirões, depois vire à direita." },
+            { speaker: "B", name: "Você", en: "Got it! Thank you so much!", pron: "Gó-rit! Tênk iú sôu mâtch!", pt: "Entendi! Muito obrigado!" }
+          ]
+        },
+        {
+          day: 6,
+          title: "Desafio de Fala Livre: Sobre Você",
+          shortTitle: "Fala Livre",
+          focus: "Conectar tudo da semana em um monólogo de 1 a 2 minutos + perguntas.",
+          roleplayTitle: "Entrevista de Podcast para Estudantes",
+          roleplayScenario: "Dia de Output! O Tutor IA é apresentador de um podcast. Você fala sobre quem é, sua rotina e sua meta no inglês, e ele faz perguntas.",
+          chunks: [
+            { en: "First of all", example: "First of all, I'm from Brazil.", pt: "Antes de tudo / Primeiramente", pronunciation: "Fârst óv ól", tip: "Conexão: 'First of all' emenda em 'fârs-tô-vól'." },
+            { en: "Besides that", example: "I go to the gym. Besides that, I study English.", pt: "Além disso", pronunciation: "Bi-sáidz dét", tip: "Letra muda: o 'e' em 'besides' é mudo (bi-sáidz)." },
+            { en: "My main goal is to...", example: "My main goal is to speak English fluently.", pt: "Meu objetivo principal é...", pronunciation: "Mái mêin gôul iz tu...", tip: "Conexão: 'goal is' junta em 'gôu-liz'." },
+            { en: "To be honest", example: "To be honest, speaking is fun once you start!", pt: "Para ser sincero", pronunciation: "Tu bí ó-nest", tip: "Letra muda: o 'H' em 'honest' é totalmente mudo (soa 'ó-nest')." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Host", en: "Welcome! Tell us a little bit about yourself.", pron: "Uél-câm! Tél âs a lí-rol bít a-báut iór-sélf.", pt: "Bem-vindo! Conte um pouco sobre você." },
+            { speaker: "B", name: "Você", en: "Thanks! First of all, I'm from Brazil.", pron: "Tênks! Fârst óv ól, áim frôm Bra-zíl.", pt: "Obrigado! Primeiramente, eu sou do Brasil." },
+            { speaker: "B", name: "Você", en: "Besides that, my main goal is to become fluent in English.", pron: "Bi-sáidz dét, mái mêin gôul iz tu bi-câm flú-ent in Ín-glich.", pt: "Além disso, meu objetivo principal é ficar fluente em inglês." },
+            { speaker: "A", name: "Host", en: "That's awesome! How do you feel about practicing every day?", pron: "Déts ó-sâm! Ráu du iú fíl a-báut prék-ti-sin é-vri dêi?", pt: "Incrível! Como você se sente praticando todo dia?" },
+            { speaker: "B", name: "Você", en: "To be honest, it's a challenge, but it makes sense now!", pron: "Tu bí ó-nest, its a tché-lendj, bât it mêiks séns náu!", pt: "Para ser sincero, é um desafio, mas agora faz sentido!" }
+          ]
+        },
+        {
+          day: 7,
+          title: "Revisão Leve e Imersão",
+          shortTitle: "Revisão & Lazer",
+          focus: "Consolidar a semana sem estresse e conversar livremente sobre lazer.",
+          roleplayTitle: "Bate-papo Relaxado de Domingo",
+          roleplayScenario: "Dia de revisão leve! O Tutor IA é um amigo internacional conversando sobre séries, animes, música e planos para a semana.",
+          chunks: [
+            { en: "I'm into...", example: "I'm really into anime and tech videos.", pt: "Eu curto / gosto muito de...", pronunciation: "Áim ín-tu...", tip: "Conexão: 'I'm into' junta em 'ái-mín-tu'." },
+            { en: "It depends", example: "Coffee or tea? Well, it depends!", pt: "Depende", pronunciation: "It di-péndz", tip: "O 's' final de 'depends' tem som de 'z' (di-péndz)." },
+            { en: "It makes sense", example: "Oh, now I get it. It makes sense!", pt: "Faz sentido", pronunciation: "It mêiks séns", tip: "Conexão: o 's' de 'makes' se funde com o 's' de 'sense'." },
+            { en: "See you later", example: "Have a great Sunday! See you later!", pt: "Até mais tarde / Te vejo depois", pronunciation: "Sí iú lêi-râr", tip: "O 't' em 'later' soa como um 'r' suave no inglês americano." }
+          ],
+          dialogue: [
+            { speaker: "A", name: "Amigo", en: "Hey! How's your Sunday going?", pron: "Rêi! Ráuz iór Sân-dêi gôu-in?", pt: "Oi! Como está indo o seu domingo?" },
+            { speaker: "B", name: "Você", en: "Pretty relaxed! Just reviewing my English flashcards.", pron: "Prí-ri ri-lékst! Djâst ri-viú-in mái Ín-glich fléch-cárdz.", pt: "Bem tranquilo! Só revisando meus flashcards de inglês." },
+            { speaker: "A", name: "Amigo", en: "Nice! What kind of shows are you into?", pron: "Náis! Uót káind óv chôuz ár iú ín-tu?", pt: "Legal! Que tipo de séries você curte?" },
+            { speaker: "B", name: "Você", en: "It depends, but I'm really into anime and podcasts.", pron: "It di-péndz, bât áim rí-li ín-tu á-ni-mêi énd pód-késts.", pt: "Depende, mas eu curto muito anime e podcasts." },
+            { speaker: "A", name: "Amigo", en: "That's the best way to learn! See you later!", pron: "Déts dâ bést uêi tu lârn! Sí iú lêi-râr!", pt: "Esse é o melhor jeito de aprender! Até mais tarde!" }
+          ]
+        }
+      ];
+
+      /* =====================================================================
+         4. ADAPTIVE SCHEDULE ENGINE & ROADMAP LEVELS
+         ===================================================================== */
+      var SCHEDULE_PRESETS = [
+        { id: "bus_night", label: "Ônibus + Noite", badge: "2h35" },
+        { id: "essential", label: "Essencial", badge: "1h" },
+        { id: "accelerated", label: "Acelerado", badge: "1h30" },
+        { id: "intensive", label: "Intensivo", badge: "2h" },
+        { id: "custom", label: "Personalizado", badge: "Livre" }
+      ];
+
+      var ROADMAP_LEVELS = [
+        {
+          code: "A1",
+          name: "Iniciante — Sobrevivência e Rotina",
+          hours: 90,
+          tutorMix: "60% Inglês / 40% Português",
+          status: "active",
+          milestones: [
+            "Apresentar-se, falar de origem, rotina e gostos básicos",
+            "Pedir café, comida, direções e ajuda usando chunks prontos",
+            "Entender podcasts pausados e diálogos do cotidiano"
+          ]
+        },
+        {
+          code: "A2",
+          name: "Elementar — Passado, Futuro e Conexões",
+          hours: 120,
+          tutorMix: "85% Inglês / 15% Português",
+          status: "locked",
+          milestones: [
+            "Contar histórias do passado e como foi o seu fim de semana",
+            "Fazer planos futuros e explicar problemas simples",
+            "Manter diálogos curtos sem travar na tradução mental"
+          ]
+        },
+        {
+          code: "B1",
+          name: "Intermediário — Independência e Opinião",
+          hours: 180,
+          tutorMix: "100% Inglês (pausado se necessário)",
+          status: "locked",
+          milestones: [
+            "Explicar o porquê das suas opiniões e participar de reuniões",
+            "Lidar com imprevistos reais em viagens e trabalho",
+            "Assistir séries e vídeos com legenda em inglês"
+          ]
+        },
+        {
+          code: "B2",
+          name: "Intermediário Superior — Fluência e Nuance",
+          hours: 210,
+          tutorMix: "100% Inglês (velocidade nativa e sotaques)",
+          status: "locked",
+          milestones: [
+            "Debater temas abstratos, negócios e tecnologia com fluidez",
+            "Usar phrasal verbs e expressões idiomáticas naturalmente",
+            "Negociar ideias e se autocorrigir em tempo real"
+          ]
+        }
+      ];
+
+      function getActiveScheduleConfig() {
+        var mode = state.scheduleMode || "bus_night";
+
+        if (mode === "bus_night") {
+          var shifts = [
+            {
+              id: "shift-morning",
+              timeRange: "06h00 – 07h00",
+              location: "Ônibus (Ida)",
+              totalMin: 60,
+              tag: "Com fone",
+              emoji: "🌅",
+              blocks: [
+                { id: "bus_srs1", number: 1, title: "Revisão SRS", durationMin: 20, desc: "Revise os flashcards agendados ouvindo os áudios com fone.", targetTab: "flashcards", btnLabel: "Abrir SRS" },
+                { id: "bus_input1", number: 2, title: "Input Compreensível", durationMin: 40, desc: "Estude os chunks e ouça o diálogo do dia acompanhando o texto.", targetTab: "shadowing", btnLabel: "Abrir Input" }
+              ]
+            },
+            {
+              id: "shift-afternoon",
+              timeRange: "17h20 – 18h20",
+              location: "Ônibus (Volta)",
+              totalMin: 60,
+              tag: "Shadowing Silencioso",
+              emoji: "🚌",
+              blocks: [
+                { id: "bus_srs2", number: 3, title: "Revisão Rápida SRS", durationMin: 10, desc: "Reforce rapidamente os cartões difíceis marcados de manhã.", targetTab: "flashcards-hard", btnLabel: "Ver Difíceis" },
+                { id: "bus_shadow_silent", number: 4, title: "Input + Shadowing Silencioso", durationMin: 50, desc: "Ouça diálogos ou podcasts repetindo mentalmente ou mexendo os lábios.", targetTab: "shadowing-bus", btnLabel: "Modo Ônibus" }
+              ]
+            },
+            {
+              id: "shift-night",
+              timeRange: "20h00 – 20h35",
+              location: "Em Casa",
+              totalMin: 35,
+              tag: "Fala Ativa & IA",
+              emoji: "🌙",
+              blocks: [
+                { id: "bus_warmup", number: 5, title: "Aquecimento em Voz Alta", durationMin: 5, desc: "Leia os chunks do dia em voz alta para soltar a boca.", targetTab: "shadowing-voice", btnLabel: "Aquecer Voz" },
+                { id: "bus_ai", number: 6, title: "Conversação Gemini Live", durationMin: 25, desc: "Roleplay falado aplicando o que absorveu nos trajetos.", targetTab: "tutor", btnLabel: "Ponte Tutor IA" },
+                { id: "bus_feedback", number: 7, title: "Feedback Pós-Aula", durationMin: 5, desc: "Cole o relatório de correções e gere flashcards para as 06h.", targetTab: "tutor-feedback", btnLabel: "Colar Erros" }
+              ]
+            }
+          ];
+          return {
+            id: "bus_night",
+            name: "Ônibus + Noite (2h35)",
+            totalMin: 155,
+            grouped: true,
+            shifts: shifts,
+            allBlocks: shifts[0].blocks.concat(shifts[1].blocks, shifts[2].blocks)
+          };
+        }
+
+        if (mode === "essential") {
+          var essBlocks = [
+            { id: "ess_srs", number: 1, title: "Revisão SRS", durationMin: 10, desc: "Flashcards com áudio e frases completas.", targetTab: "flashcards", btnLabel: "Abrir SRS" },
+            { id: "ess_input", number: 2, title: "Input + Shadowing", durationMin: 20, desc: "Chunks e diálogo com repetição em voz alta.", targetTab: "shadowing", btnLabel: "Abrir Input" },
+            { id: "ess_ai", number: 3, title: "Conversação Gemini Live", durationMin: 25, desc: "Roleplay falado da Missão do Dia.", targetTab: "tutor", btnLabel: "Ponte Tutor IA" },
+            { id: "ess_feedback", number: 4, title: "Feedback Pós-Aula", durationMin: 5, desc: "Transforme erros da aula em flashcards SRS.", targetTab: "tutor-feedback", btnLabel: "Colar Erros" }
+          ];
+          return { id: "essential", name: "Essencial (1h)", totalMin: 60, grouped: false, allBlocks: essBlocks };
+        }
+
+        if (mode === "accelerated") {
+          var accBlocks = [
+            { id: "acc_srs", number: 1, title: "Revisão SRS", durationMin: 15, desc: "Revisão espaçada dos chunks anteriores.", targetTab: "flashcards", btnLabel: "Abrir SRS" },
+            { id: "acc_input", number: 2, title: "Input Compreensível", durationMin: 25, desc: "Chunks do dia + escuta de diálogos e podcasts.", targetTab: "shadowing", btnLabel: "Abrir Input" },
+            { id: "acc_shadow", number: 3, title: "Shadowing Ativo", durationMin: 20, desc: "Repetição acompanhando ritmo e pronúncia.", targetTab: "shadowing-voice", btnLabel: "Praticar Voz" },
+            { id: "acc_ai", number: 4, title: "Conversação Gemini Live", durationMin: 25, desc: "Roleplay falado aplicando o conteúdo.", targetTab: "tutor", btnLabel: "Ponte Tutor IA" },
+            { id: "acc_feedback", number: 5, title: "Feedback Pós-Aula", durationMin: 5, desc: "Importe correções para o baralho SRS.", targetTab: "tutor-feedback", btnLabel: "Colar Erros" }
+          ];
+          return { id: "accelerated", name: "Acelerado (1h30)", totalMin: 90, grouped: false, allBlocks: accBlocks };
+        }
+
+        if (mode === "intensive") {
+          var intBlocks = [
+            { id: "int_srs", number: 1, title: "Revisão SRS Completa", durationMin: 20, desc: "Flashcards do dia + reforço de difíceis.", targetTab: "flashcards", btnLabel: "Abrir SRS" },
+            { id: "int_input", number: 2, title: "Input Compreensível", durationMin: 40, desc: "Chunks + imersão em diálogos e vídeos em EN.", targetTab: "shadowing", btnLabel: "Abrir Input" },
+            { id: "int_shadow", number: 3, title: "Shadowing Intensivo", durationMin: 30, desc: "Treino focado de ritmo, entonação e conexões.", targetTab: "shadowing-voice", btnLabel: "Praticar Voz" },
+            { id: "int_ai", number: 4, title: "Conversação Gemini Live", durationMin: 25, desc: "Roleplay completo com o Professor de IA.", targetTab: "tutor", btnLabel: "Ponte Tutor IA" },
+            { id: "int_feedback", number: 5, title: "Feedback Pós-Aula", durationMin: 5, desc: "Importe correções em lote para o SRS.", targetTab: "tutor-feedback", btnLabel: "Colar Erros" }
+          ];
+          return { id: "intensive", name: "Intensivo (2h)", totalMin: 120, grouped: false, allBlocks: intBlocks };
+        }
+
+        var total = Math.min(240, Math.max(45, parseInt(state.customMinutes, 10) || 90));
+        var aiMin = 25;
+        var fbMin = 5;
+        var rem = Math.max(15, total - aiMin - fbMin);
+        var srsMin = Math.max(5, Math.round(rem * 0.25));
+        var inputMin = rem - srsMin;
+        var custBlocks = [
+          { id: "cust_srs", number: 1, title: "Revisão SRS", durationMin: srsMin, desc: "Revisão proporcional à sua carga personalizada.", targetTab: "flashcards", btnLabel: "Abrir SRS" },
+          { id: "cust_input", number: 2, title: "Input + Shadowing", durationMin: inputMin, desc: "Chunks, diálogos e treino de pronúncia.", targetTab: "shadowing", btnLabel: "Abrir Input" },
+          { id: "cust_ai", number: 3, title: "Conversação Gemini Live", durationMin: aiMin, desc: "Roleplay falado da Missão do Dia.", targetTab: "tutor", btnLabel: "Ponte Tutor IA" },
+          { id: "cust_feedback", number: 4, title: "Feedback Pós-Aula", durationMin: fbMin, desc: "Cole erros corrigidos no importador SRS.", targetTab: "tutor-feedback", btnLabel: "Colar Erros" }
+        ];
+        return {
+          id: "custom",
+          name: "Personalizado (" + formatMinutesAsHours(total) + ")",
+          totalMin: total,
+          grouped: false,
+          allBlocks: custBlocks
+        };
+      }
+
+      /* =====================================================================
+         5. SAFE STATE LOADING & NON-DESTRUCTIVE MIGRATION
+         ===================================================================== */
+      var PRIMARY_STORAGE_KEY = "english_master_state_v2";
+
+      function getDefaultState() {
+        return {
+          currentTab: "today",
+          selectedDay: 1,
+          scheduleMode: "bus_night",
+          customMinutes: 90,
+          streak: 0,
+          lastCompletedDate: null,
+          totalMinutesStudied: 0,
+          dayProgress: {},
+          flashcards: INITIAL_FLASHCARDS.map(function (c) { return Object.assign({}, c); }),
+          flashcardFilter: "due",
+          speechRate: 0.85,
+          showTranslation: true,
+          showPronunciation: false,
+          shadowingMode: true,
+          busMode: true
+        };
+      }
+
+      function enrichFlashcards(existingCards) {
+        if (!Array.isArray(existingCards) || existingCards.length === 0) {
+          return INITIAL_FLASHCARDS.map(function (c) { return Object.assign({}, c); });
+        }
+
+        var refByEn = {};
+        INITIAL_FLASHCARDS.forEach(function (c) {
+          refByEn[c.en.toLowerCase().trim()] = c;
+        });
+        MODULE_1_DAYS.forEach(function (d) {
+          d.chunks.forEach(function (ch) {
+            var k = ch.en.toLowerCase().trim();
+            if (!refByEn[k]) refByEn[k] = ch;
+          });
+        });
+
+        return existingCards.map(function (card, idx) {
+          var enText = String(card && card.en ? card.en : "").trim();
+          var ref = refByEn[enText.toLowerCase()];
+          var existingPron = card.pronunciation || card.pron || "";
+          var existingTip = card.pronAlert || card.tip || "";
+          return {
+            id: card.id || ("fc-migrated-" + idx + "-" + Date.now()),
+            en: enText || "Nice to meet you",
+            example: card.example || (ref ? ref.example : enText),
+            pt: card.pt || (ref ? ref.pt : ""),
+            pronunciation: existingPron || (ref ? ref.pronunciation : ""),
+            tip: existingTip || (ref ? ref.tip : "Dica: toque em qualquer palavra para ouvir devagar."),
+            interval: typeof card.interval === "number" ? card.interval : 0,
+            reps: typeof card.reps === "number" ? card.reps : 0,
+            nextReview: typeof card.nextReview === "number" ? card.nextReview : 0,
+            isHard: Boolean(card.isHard)
+          };
+        });
+      }
+
+      function loadStateSafely() {
+        var defaults = getDefaultState();
+        try {
+          if (typeof window.localStorage === "undefined") return defaults;
+
+          var priorityKeys = [
+            PRIMARY_STORAGE_KEY,
+            "english_master_data",
+            "english_master_state_v1",
+            "english_master_v2",
+            "english_master_state",
+            "englishMasterState"
+          ];
+
+          // Also discover any other key containing english_master or englishMaster
+          try {
+            var allKeys = Object.keys(window.localStorage);
+            allKeys.forEach(function (k) {
+              var lower = k.toLowerCase();
+              if ((lower.indexOf("english_master") !== -1 || lower.indexOf("englishmaster") !== -1) && priorityKeys.indexOf(k) === -1) {
+                priorityKeys.push(k);
+              }
+            });
+          } catch (e) {}
+
+          var foundData = null;
+          for (var i = 0; i < priorityKeys.length; i++) {
+            var raw = window.localStorage.getItem(priorityKeys[i]);
+            if (raw) {
+              try {
+                var parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === "object") {
+                  foundData = parsed;
+                  break;
+                }
+              } catch (parseErr) {}
+            }
+          }
+
+          if (!foundData) return defaults;
+
+          var merged = Object.assign({}, defaults, foundData);
+          merged.flashcards = enrichFlashcards(foundData.flashcards);
+          if (!merged.dayProgress || typeof merged.dayProgress !== "object") {
+            merged.dayProgress = {};
+          }
+          if (typeof merged.selectedDay !== "number" || merged.selectedDay < 1 || merged.selectedDay > 7) {
+            merged.selectedDay = 1;
+          }
+          return merged;
+        } catch (err) {
+          return defaults;
+        }
+      }
+
+      function saveStateSafely() {
+        try {
+          if (typeof window.localStorage !== "undefined") {
+            window.localStorage.setItem(PRIMARY_STORAGE_KEY, JSON.stringify(state));
+          }
+        } catch (err) {}
+      }
+
+      var state = loadStateSafely();
+      saveStateSafely(); // Persist non-destructive enriched fields safely
+
+      /* =====================================================================
+         6. RUNTIME UI STATE (TIMERS, AUDIO, DIALOGUE PLAYER)
+         ===================================================================== */
+      var activeTimers = {};
+      var currentCardFlipped = false;
+      var allFilterIndex = 0;
+      var isPlayingDialogue = false;
+      var currentDialogueIndex = -1;
+      var isShadowingPausing = false;
+      var shadowingPauseTimeout = null;
+      var showMasterPrompt = false;
+
+      function ensureTimerForBlock(block) {
+        if (!activeTimers[block.id]) {
+          activeTimers[block.id] = {
+            remaining: block.durationMin * 60,
+            defaultDurationMin: block.durationMin,
+            running: false,
+            intervalId: null
+          };
+        } else if (activeTimers[block.id].defaultDurationMin !== block.durationMin && !activeTimers[block.id].running) {
+          activeTimers[block.id].remaining = block.durationMin * 60;
+          activeTimers[block.id].defaultDurationMin = block.durationMin;
+        }
+        return activeTimers[block.id];
+      }
+
+      function stopAllTimers() {
+        Object.keys(activeTimers).forEach(function (k) {
+          if (activeTimers[k].intervalId) {
+            clearInterval(activeTimers[k].intervalId);
+            activeTimers[k].intervalId = null;
+          }
+          activeTimers[k].running = false;
+        });
+      }
+
+      /* =====================================================================
+         7. AUDIO (SAFE WEB AUDIO CHIME + SAFE WEB SPEECH API)
+         ===================================================================== */
+      function playChimeSound() {
+        try {
+          var AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          var ctx = new AudioCtx();
+          var notes = [523.25, 659.25, 783.99];
+          notes.forEach(function (freq, i) {
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+            gain.gain.setValueAtTime(0.001, ctx.currentTime + i * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime + i * 0.12 + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.5);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + i * 0.12);
+            osc.stop(ctx.currentTime + i * 0.12 + 0.55);
+          });
+        } catch (err) {}
+      }
+
+      function getBestEnglishVoice() {
+        try {
+          if (!("speechSynthesis" in window)) return null;
+          var voices = window.speechSynthesis.getVoices() || [];
+          return (
+            voices.find(function (v) { return v.lang === "en-US" && /Google|Natural|Samantha|Aria|Jenny/i.test(v.name); }) ||
+            voices.find(function (v) { return v.lang === "en-US"; }) ||
+            voices.find(function (v) { return v.lang && v.lang.indexOf("en") === 0; }) ||
+            null
+          );
+        } catch (err) {
+          return null;
+        }
+      }
+
+      function speakText(text, rate, onEndCb) {
+        try {
+          if (!("speechSynthesis" in window)) {
+            showToast("Seu navegador não suporta leitura em voz alta.", "warning");
+            if (onEndCb) onEndCb();
+            return;
+          }
+          window.speechSynthesis.cancel();
+          var utt = new SpeechSynthesisUtterance(String(text || ""));
+          utt.lang = "en-US";
+          utt.rate = rate || 1.0;
+          var voice = getBestEnglishVoice();
+          if (voice) utt.voice = voice;
+          utt.onend = function () { if (onEndCb) onEndCb(); };
+          utt.onerror = function () { if (onEndCb) onEndCb(); };
+          window.speechSynthesis.speak(utt);
+        } catch (err) {
+          if (onEndCb) onEndCb();
+        }
+      }
+
+      function speakSingleWord(rawWord, el) {
+        var clean = String(rawWord || "").replace(/^[^a-zA-Z0-9']+|[^a-zA-Z0-9']+$/g, "");
+        if (!clean) return;
+        var prev = document.querySelectorAll(".word-speaking");
+        for (var i = 0; i < prev.length; i++) prev[i].classList.remove("word-speaking");
+        if (el) el.classList.add("word-speaking");
+        speakText(clean, 0.6, function () {
+          if (el) el.classList.remove("word-speaking");
+        });
+        setTimeout(function () {
+          if (el) el.classList.remove("word-speaking");
+        }, 1700);
+      }
+
+      function stopDialoguePlayback() {
+        isPlayingDialogue = false;
+        isShadowingPausing = false;
+        currentDialogueIndex = -1;
+        if (shadowingPauseTimeout) {
+          clearTimeout(shadowingPauseTimeout);
+          shadowingPauseTimeout = null;
+        }
+        try {
+          if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+        } catch (e) {}
+        if (state.currentTab === "shadowing") updateDialogueHighlightUI();
+      }
+
+      /* =====================================================================
+         8. TOAST & CLIPBOARD HELPERS
+         ===================================================================== */
+      function showToast(message, type) {
+        try {
+          var container = document.getElementById("toast-container");
+          if (!container) return;
+          var div = document.createElement("div");
+          div.className = "toast-item toast-" + (type || "info");
+          div.textContent = message;
+          container.appendChild(div);
+          setTimeout(function () {
+            div.style.opacity = "0";
+            div.style.transition = "opacity 0.25s ease";
+            setTimeout(function () { div.remove(); }, 260);
+          }, 3000);
+        } catch (e) {}
+      }
+
+      function copyToClipboard(text, msg) {
+        try {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          ta.setSelectionRange(0, 99999);
+          var ok = document.execCommand("copy");
+          document.body.removeChild(ta);
+          if (ok) {
+            showToast(msg || "Copiado!", "success");
+            return;
+          }
+        } catch (e) {}
+        showToast("Selecione e copie o texto manualmente.", "warning");
+      }
+
+      /* =====================================================================
+         9. PROGRESS, STREAK, TIMERS & SRS LOGIC
+         ===================================================================== */
+      function getCurrentDayData() {
+        return MODULE_1_DAYS.find(function (d) { return d.day === state.selectedDay; }) || MODULE_1_DAYS[0];
+      }
+
+      function getDayBlocksStatus(dayNum) {
+        var key = (state.scheduleMode || "bus_night") + "_" + dayNum;
+        if (!state.dayProgress[key]) state.dayProgress[key] = {};
+        return state.dayProgress[key];
+      }
+
+      function getDayCompletionStats(dayNum) {
+        var cfg = getActiveScheduleConfig();
+        var prog = getDayBlocksStatus(dayNum);
+        var total = cfg.allBlocks.length;
+        var done = cfg.allBlocks.filter(function (b) { return Boolean(prog[b.id]); }).length;
+        var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        return { done: done, total: total, pct: pct };
+      }
+
+      function checkAndUpdateStreak() {
+        var today = getTodayDateString();
+        if (state.lastCompletedDate === today) return;
+        if (state.lastCompletedDate) {
+          var last = new Date(state.lastCompletedDate + "T00:00:00");
+          var curr = new Date(today + "T00:00:00");
+          var diff = Math.round((curr - last) / 86400000);
+          state.streak = diff === 1 ? (state.streak + 1) : 1;
+        } else {
+          state.streak = 1;
+        }
+        state.lastCompletedDate = today;
+      }
+
+      function toggleBlockCompletion(blockId, fromTimer) {
+        var cfg = getActiveScheduleConfig();
+        var block = cfg.allBlocks.find(function (b) { return b.id === blockId; });
+        if (!block) return;
+        var prog = getDayBlocksStatus(state.selectedDay);
+        var wasDone = Boolean(prog[blockId]);
+        if (fromTimer && wasDone) return;
+        prog[blockId] = !wasDone;
+        if (prog[blockId]) {
+          state.totalMinutesStudied += block.durationMin;
+          checkAndUpdateStreak();
+          playChimeSound();
+          showToast('Bloco "' + block.title + '" concluído! (+' + block.durationMin + ' min)', "success");
+        } else {
+          state.totalMinutesStudied = Math.max(0, state.totalMinutesStudied - block.durationMin);
+        }
+        saveStateSafely();
+        updateGlobalStats();
+        if (state.currentTab === "today") renderCurrentTab();
+      }
+
+      function toggleTimer(blockId) {
+        var cfg = getActiveScheduleConfig();
+        var block = cfg.allBlocks.find(function (b) { return b.id === blockId; });
+        if (!block) return;
+        var t = ensureTimerForBlock(block);
+        if (t.running) {
+          clearInterval(t.intervalId);
+          t.intervalId = null;
+          t.running = false;
+        } else {
+          stopAllTimers();
+          t.running = true;
+          t.intervalId = setInterval(function () {
+            if (t.remaining > 0) {
+              t.remaining -= 1;
+              var el = document.getElementById("timer-display-" + blockId);
+              if (el) el.textContent = formatTime(t.remaining);
+            } else {
+              clearInterval(t.intervalId);
+              t.intervalId = null;
+              t.running = false;
+              toggleBlockCompletion(blockId, true);
+              t.remaining = block.durationMin * 60;
+              if (state.currentTab === "today") renderCurrentTab();
+            }
+          }, 1000);
+        }
+        if (state.currentTab === "today") renderCurrentTab();
+      }
+
+      function resetTimer(blockId) {
+        var cfg = getActiveScheduleConfig();
+        var block = cfg.allBlocks.find(function (b) { return b.id === blockId; });
+        if (!block) return;
+        var t = ensureTimerForBlock(block);
+        if (t.intervalId) clearInterval(t.intervalId);
+        t.intervalId = null;
+        t.running = false;
+        t.remaining = block.durationMin * 60;
+        if (state.currentTab === "today") renderCurrentTab();
+      }
+
+      function getDueFlashcards() {
+        var now = Date.now();
+        return state.flashcards.filter(function (c) { return (c.nextReview || 0) <= now; });
+      }
+
+      function getHardFlashcards() {
+        return state.flashcards.filter(function (c) { return Boolean(c.isHard); });
+      }
+
+      function getFilteredFlashcards() {
+        if (state.flashcardFilter === "hard") return getHardFlashcards();
+        if (state.flashcardFilter === "all") return state.flashcards;
+        return getDueFlashcards();
+      }
+
+      function getLearnedCount() {
+        return state.flashcards.filter(function (c) { return (c.reps || 0) >= 1; }).length;
+      }
+
+      function rateFlashcard(cardId, rating) {
+        var card = state.flashcards.find(function (c) { return c.id === cardId; });
+        if (!card) return;
+        var now = Date.now();
+        var MIN = 60 * 1000;
+        var DAY = 24 * 60 * 60 * 1000;
+
+        if (rating === "hard") {
+          card.interval = 0;
+          card.isHard = true;
+          card.nextReview = now + 10 * MIN;
+          showToast("Marcado como Difícil — salvo na fila das 17h20!", "warning");
+        } else if (rating === "good") {
+          var nextG = card.interval < 1 ? 1 : Math.round(card.interval * 2);
+          card.interval = nextG;
+          card.isHard = false;
+          card.reps = (card.reps || 0) + 1;
+          card.nextReview = now + nextG * DAY;
+          showToast("Bom! Próxima revisão em " + nextG + (nextG === 1 ? " dia." : " dias."), "success");
+        } else {
+          var nextE = card.interval < 1 ? 4 : Math.round(card.interval * 2.5);
+          card.interval = nextE;
+          card.isHard = false;
+          card.reps = (card.reps || 0) + 1;
+          card.nextReview = now + nextE * DAY;
+          showToast("Fácil! Próxima revisão em " + nextE + " dias.", "info");
+        }
+
+        if (state.flashcardFilter === "all" && state.flashcards.length > 0) {
+          allFilterIndex = (allFilterIndex + 1) % state.flashcards.length;
+        }
+        currentCardFlipped = false;
+        saveStateSafely();
+        renderCurrentTab();
+      }
+
+      function addCardToSRS(en, example, pt, pronunciation, tip, markHard, silent) {
+        var cleanEn = String(en || "").trim();
+        if (!cleanEn) return false;
+        var exists = state.flashcards.some(function (c) {
+          return c.en.toLowerCase().trim() === cleanEn.toLowerCase();
+        });
+        if (exists) {
+          if (!silent) showToast("Esse chunk já está no seu baralho SRS!", "info");
+          return false;
+        }
+        state.flashcards.unshift({
+          id: "fc-" + Date.now() + "-" + Math.floor(Math.random() * 10000),
+          en: cleanEn,
+          example: String(example || cleanEn).trim(),
+          pt: String(pt || "").trim(),
+          pronunciation: String(pronunciation || "").trim(),
+          tip: String(tip || "Adicionado do seu estudo diário.").trim(),
+          interval: 0,
+          reps: 0,
+          nextReview: 0,
+          isHard: Boolean(markHard)
+        });
+        saveStateSafely();
+        if (!silent) showToast('"' + cleanEn + '" adicionado ao SRS!', "success");
+        renderNavigation();
+        if (state.currentTab === "flashcards") renderCurrentTab();
+        return true;
+      }
+
+      /* =====================================================================
+         10. DIALOGUE PLAYER
+         ===================================================================== */
+      function playDialogueFrom(startIdx) {
+        var dayData = getCurrentDayData();
+        if (!dayData.dialogue || !dayData.dialogue.length) return;
+        stopDialoguePlayback();
+        isPlayingDialogue = true;
+        playLineStep(startIdx);
+      }
+
+      function playLineStep(index) {
+        if (!isPlayingDialogue) return;
+        var dayData = getCurrentDayData();
+        if (index >= dayData.dialogue.length) {
+          stopDialoguePlayback();
+          showToast("Diálogo finalizado! Ótimo treino de Shadowing.", "success");
+          return;
+        }
+        currentDialogueIndex = index;
+        isShadowingPausing = false;
+        updateDialogueHighlightUI();
+
+        var line = dayData.dialogue[index];
+        speakText(line.en, state.speechRate, function () {
+          if (!isPlayingDialogue) return;
+          if (state.shadowingMode) {
+            isShadowingPausing = true;
+            updateDialogueHighlightUI();
+            shadowingPauseTimeout = setTimeout(function () {
+              if (isPlayingDialogue) playLineStep(index + 1);
+            }, 2500);
+          } else {
+            shadowingPauseTimeout = setTimeout(function () {
+              if (isPlayingDialogue) playLineStep(index + 1);
+            }, 450);
+          }
+        });
+      }
+
+      function updateDialogueHighlightUI() {
+        var dayData = getCurrentDayData();
+        dayData.dialogue.forEach(function (_, idx) {
+          var lineEl = document.getElementById("dialogue-line-" + idx);
+          var badgeEl = document.getElementById("shadow-badge-" + idx);
+          if (!lineEl) return;
+          if (idx === currentDialogueIndex && isPlayingDialogue) {
+            lineEl.classList.add("speaking-active");
+            if (badgeEl) {
+              badgeEl.classList.remove("hidden");
+              badgeEl.textContent = isShadowingPausing
+                ? (state.busMode ? "🚌 Repita mentalmente / mexa os lábios (2.5s)..." : "🗣️ Sua vez! Repita em voz alta (2.5s)...")
+                : "🔊 Ouvindo nativo...";
+              badgeEl.className = "badge " + (isShadowingPausing ? "badge-amber" : "badge-indigo");
+            }
+          } else {
+            lineEl.classList.remove("speaking-active");
+            if (badgeEl) badgeEl.classList.add("hidden");
+          }
+        });
+
+        var playBtn = document.getElementById("btn-play-dialogue");
+        if (playBtn) {
+          playBtn.textContent = isPlayingDialogue ? "⏹ Parar Diálogo" : "▶ Ouvir Diálogo Completo";
+          playBtn.className = "btn " + (isPlayingDialogue ? "btn-rose" : "btn-primary");
+        }
+      }
+
+      /* =====================================================================
+         11. AI TUTOR PROMPTS
+         ===================================================================== */
+      function generateDailyMissionPrompt(dayData) {
+        var cfg = getActiveScheduleConfig();
+        var chunksList = dayData.chunks.map(function (c) {
+          return '- "' + c.en + '" (' + c.pt + ')';
+        }).join("\n");
+
+        var note = state.scheduleMode === "bus_night"
+          ? "Eu já fiz o input e shadowing silencioso hoje mais cedo nos trajetos de ônibus (06h00 e 17h20) e acabei de fazer 5 min de aquecimento em voz alta. Agora às 20h00 quero focar 100% em fala ativa!"
+          : "Eu já fiz o input e estudei os chunks de hoje na minha rotina (" + cfg.name + ") e agora quero focar em conversação ativa!";
+
+        return "=== MISSÃO DO DIA (20h00) — ENGLISH MASTER ===\n" +
+          "Nível Atual: A1 (Iniciante) — Módulo 1, Dia " + dayData.day + ": " + dayData.title + "\n" +
+          "Idioma: 60% Inglês (claro e pausado) / 40% Português (apenas se eu travar).\n\n" +
+          "CONTEXTO DO MEU ESTUDO HOJE:\n" + note + "\n\n" +
+          "CENÁRIO DE ROLEPLAY (" + dayData.roleplayTitle + "):\n" + dayData.roleplayScenario + "\n\n" +
+          "CHUNKS QUE ESTUDEI HOJE (me incentive a usar na conversa):\n" + chunksList + "\n\n" +
+          "REGRAS DA AULA (25 MINUTOS):\n" +
+          "1. Faça uma pergunta curta por vez no papel do personagem e espere minha resposta.\n" +
+          "2. NÃO me interrompa no meio da fala para corrigir gramática.\n" +
+          "3. Se eu perguntar em português 'como digo X?', me ajude rapidamente e continue o roleplay.\n" +
+          "4. Ao final, quando eu pedir 'Gere meu relatório de correções', entregue cada correção em uma linha limpa neste formato exato para eu importar no meu app:\n" +
+          "   Frase corrigida | Tradução ou explicação rápida\n\n" +
+          'Responda apenas "Ready! Let\'s start Day ' + dayData.day + '!" para eu ativar o Gemini Live.';
+      }
+
+      function getMasterGemPrompt() {
+        return 'Você é o Professor Particular do programa "English Master", especialista em ensinar brasileiros a alcançarem fluência na conversação usando metodologia científica (Input Compreensível, Chunks Lexicais, Prática de Recuperação Espaçada e Output).\n\n' +
+          'REGRAS PERMANENTES:\n' +
+          '- Seja encorajador, natural e mantenha respostas curtas (2 a 3 frases) para o aluno falar a maior parte do tempo.\n' +
+          '- Adapte a proporção de inglês/português ao nível enviado na Missão do Dia (A1: 60% EN / 40% PT; A2: 85% EN; B1/B2: 100% EN).\n' +
+          '- NUNCA interrompa o aluno durante a fala para corrigir erros menores; anote mentalmente para o relatório final.\n' +
+          '- Ao receber "Gere meu relatório de correções", liste cada correção em uma linha no formato:\n' +
+          '  Frase corrigida | Tradução ou explicação breve';
+      }
+
+      /* =====================================================================
+         12. NAVIGATION & VIEW RENDERERS
+         ===================================================================== */
+      var NAV_ITEMS = [
+        { id: "today", label: "Hoje", short: "Hoje", icon: "📅" },
+        { id: "flashcards", label: "Flashcards (SRS)", short: "SRS", icon: "🗂️" },
+        { id: "shadowing", label: "Input & Shadowing", short: "Input", icon: "🎧" },
+        { id: "tutor", label: "Tutor IA (Ponte)", short: "Tutor IA", icon: "🤖" },
+        { id: "roadmap", label: "Mapa (A1–B2)", short: "Mapa", icon: "🗺️" }
+      ];
+
+      function renderNavigation() {
+        var dNav = document.getElementById("desktop-nav");
+        var mNav = document.getElementById("mobile-nav");
+        var dueCount = getDueFlashcards().length;
+
+        if (dNav) {
+          dNav.innerHTML = NAV_ITEMS.map(function (item) {
+            var active = state.currentTab === item.id;
+            return '<button class="nav-btn ' + (active ? "active" : "") + '" data-action="switch-tab" data-tab="' + item.id + '">' +
+              '<span class="nav-btn-left"><span>' + item.icon + '</span><span>' + item.label + '</span></span>' +
+              (item.id === "flashcards" && dueCount > 0 ? '<span class="nav-badge">' + dueCount + '</span>' : '') +
+              '</button>';
+          }).join("");
+        }
+
+        if (mNav) {
+          mNav.innerHTML = NAV_ITEMS.map(function (item) {
+            var active = state.currentTab === item.id;
+            return '<button class="mob-nav-btn ' + (active ? "active" : "") + '" data-action="switch-tab" data-tab="' + item.id + '">' +
+              '<span style="font-size:1.15rem;line-height:1;">' + item.icon + '</span>' +
+              '<span>' + item.short + '</span>' +
+              (item.id === "flashcards" && dueCount > 0 ? '<span class="mob-dot"></span>' : '') +
+              '</button>';
+          }).join("");
+        }
+      }
+
+      function updateGlobalStats() {
+        var cfg = getActiveScheduleConfig();
+        var hours = (state.totalMinutesStudied / 60).toFixed(1);
+        var pct = Math.min(100, (state.totalMinutesStudied / (600 * 60)) * 100);
+        var sh = document.getElementById("sidebar-hours");
+        var sb = document.getElementById("sidebar-hours-bar");
+        var ms = document.getElementById("mobile-streak");
+        var msub = document.getElementById("mobile-header-sub");
+        if (sh) sh.textContent = hours + "h / 600h";
+        if (sb) sb.style.width = Math.max(pct, state.totalMinutesStudied > 0 ? 1.5 : 0) + "%";
+        if (ms) ms.textContent = state.streak;
+        if (msub) msub.textContent = "A1 • Dia " + state.selectedDay + " • " + formatMinutesAsHours(cfg.totalMin) + "/dia";
+      }
+
+      function renderBlockCard(block, prog) {
+        var isDone = Boolean(prog[block.id]);
+        var t = ensureTimerForBlock(block);
+        var stateClass = isDone ? "done" : (t.running ? "running" : "");
+        return '<div class="block-card ' + stateClass + '">' +
+          '<div>' +
+            '<div class="row-between" style="align-items:flex-start;">' +
+              '<div>' +
+                '<div class="text-xs text-muted" style="font-weight:700;">BLOCO ' + block.number + ' • ' + block.durationMin + ' MIN</div>' +
+                '<div class="h3-title" style="margin-top:2px;">' + escapeHtml(block.title) + '</div>' +
+              '</div>' +
+              '<button class="btn btn-sm ' + (isDone ? "btn-emerald" : "btn-secondary") + '" data-action="toggle-block" data-id="' + block.id + '">' +
+                (isDone ? "✓ Feito" : "Concluir") +
+              '</button>' +
+            '</div>' +
+            '<p class="text-xs text-muted" style="margin-top:8px;">' + escapeHtml(block.desc) + '</p>' +
+          '</div>' +
+          '<div class="row-between" style="padding-top:10px;border-top:1px solid var(--border-subtle);">' +
+            '<div class="row-wrap">' +
+              '<span class="timer-display" id="timer-display-' + block.id + '">' + formatTime(t.remaining) + '</span>' +
+              '<button class="btn btn-sm ' + (t.running ? "btn-amber" : "btn-primary") + '" data-action="toggle-timer" data-id="' + block.id + '" title="' + (t.running ? "Pausar" : "Iniciar") + '">' +
+                (t.running ? "⏸" : "▶") +
+              '</button>' +
+              '<button class="btn btn-sm btn-secondary" data-action="reset-timer" data-id="' + block.id + '" title="Reiniciar">↺</button>' +
+            '</div>' +
+            '<button class="btn btn-sm btn-secondary" data-action="switch-tab" data-tab="' + block.targetTab + '">' + escapeHtml(block.btnLabel) + ' →</button>' +
+          '</div>' +
+        '</div>';
+      }
+
+      function renderTodayTab() {
+        var dayData = getCurrentDayData();
+        var cfg = getActiveScheduleConfig();
+        var prog = getDayBlocksStatus(state.selectedDay);
+        var stats = getDayCompletionStats(state.selectedDay);
+        var forecast = calculateForecastText(600, cfg.totalMin);
+        var h = new Date().getHours();
+        var greeting = h < 12 ? "Bom dia" : (h < 18 ? "Boa tarde" : "Boa noite");
+
+        var shiftsHtml = "";
+        if (cfg.grouped) {
+          shiftsHtml = cfg.shifts.map(function (shift, idx) {
+            var sDone = shift.blocks.filter(function (b) { return Boolean(prog[b.id]); }).length;
+            return '<section class="card">' +
+              '<div class="shift-header">' +
+                '<div>' +
+                  '<div class="row-wrap" style="margin-bottom:4px;">' +
+                    '<span class="badge badge-indigo">Turno ' + (idx + 1) + ' • ' + shift.emoji + ' ' + escapeHtml(shift.tag) + '</span>' +
+                    '<span class="badge badge-slate">' + shift.totalMin + ' min</span>' +
+                  '</div>' +
+                  '<h3 class="h2-title">' + escapeHtml(shift.timeRange) + ' • ' + escapeHtml(shift.location) + '</h3>' +
+                '</div>' +
+                '<span class="badge ' + (sDone === shift.blocks.length ? "badge-emerald" : "badge-slate") + '">' + sDone + '/' + shift.blocks.length + ' feitos</span>' +
+              '</div>' +
+              '<div class="blocks-grid ' + (shift.blocks.length === 3 ? "cols-3" : "") + '">' +
+                shift.blocks.map(function (b) { return renderBlockCard(b, prog); }).join("") +
+              '</div>' +
+            '</section>';
+          }).join("");
+        } else {
+          shiftsHtml = '<section class="card">' +
+            '<div class="shift-header">' +
+              '<h3 class="h2-title">⏱️ Blocos da Rotina: ' + escapeHtml(cfg.name) + '</h3>' +
+              '<span class="badge badge-slate">' + cfg.totalMin + ' min totais</span>' +
+            '</div>' +
+            '<div class="blocks-grid">' +
+              cfg.allBlocks.map(function (b) { return renderBlockCard(b, prog); }).join("") +
+            '</div>' +
+          '</section>';
+        }
+
+        return '<div class="stack-lg">' +
+          '<section class="card">' +
+            '<div class="row-between" style="margin-bottom:10px;">' +
+              '<span class="badge badge-indigo">Nível A1 • Módulo 1 • Dia ' + dayData.day + '</span>' +
+              '<span class="badge badge-emerald">' + formatMinutesAsHours(cfg.totalMin) + '/dia • Previsão B2: ' + forecast + '</span>' +
+            '</div>' +
+            '<h1 class="h1-title">' + greeting + '! Foco na sua fluência.</h1>' +
+            '<p class="text-muted" style="margin-top:4px;"><strong style="color:#e2e8f0;">' + escapeHtml(dayData.title) + '</strong> — ' + escapeHtml(dayData.focus) + '</p>' +
+
+            '<div class="stats-grid">' +
+              '<div class="stat-box"><div class="stat-label">🔥 Sequência</div><div class="stat-val" style="color:var(--amber-300);">' + state.streak + (state.streak === 1 ? " dia" : " dias") + '</div></div>' +
+              '<div class="stat-box"><div class="stat-label">🎯 Nível Atual</div><div class="stat-val" style="color:var(--indigo-400);">A1 • Sem. 1</div></div>' +
+              '<div class="stat-box"><div class="stat-label">✅ Progresso Hoje</div><div class="stat-val" style="color:var(--emerald-400);">' + stats.pct + '% <span class="text-xs text-muted">(' + stats.done + '/' + stats.total + ')</span></div></div>' +
+              '<div class="stat-box"><div class="stat-label">📅 Previsão B2</div><div class="stat-val" style="color:var(--sky-300);">' + forecast + '</div></div>' +
+            '</div>' +
+
+            '<div class="progress-track" style="margin-top:14px;"><div class="progress-fill" style="width:' + stats.pct + '%;"></div></div>' +
+
+            '<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle);">' +
+              '<div class="text-xs text-muted" style="font-weight:700;">SELECIONE O DIA DO MÓDULO 1 (A1):</div>' +
+              '<div class="day-scroll">' +
+                MODULE_1_DAYS.map(function (d) {
+                  var active = d.day === state.selectedDay;
+                  var ds = getDayCompletionStats(d.day);
+                  return '<button class="day-pill ' + (active ? "active" : "") + '" data-action="select-day" data-day="' + d.day + '">' +
+                    '<div class="day-pill-top"><span>Dia ' + d.day + '</span>' + (ds.pct === 100 ? '<span>✓</span>' : '') + '</div>' +
+                    '<div class="day-pill-sub">' + escapeHtml(d.shortTitle) + '</div>' +
+                  '</button>';
+                }).join("") +
+              '</div>' +
+            '</div>' +
+          '</section>' +
+
+          '<section class="card">' +
+            '<h3 class="h3-title" style="margin-bottom:4px;">⚙️ Carga Horária Diária Adaptável</h3>' +
+            '<p class="text-xs text-muted" style="margin-bottom:12px;">Troque a qualquer momento — os cronômetros e o prazo até o B2 recalculam automaticamente.</p>' +
+            '<div class="row-wrap">' +
+              SCHEDULE_PRESETS.map(function (p) {
+                var active = state.scheduleMode === p.id;
+                return '<button class="preset-btn ' + (active ? "active" : "") + '" data-action="set-schedule" data-mode="' + p.id + '">' +
+                  '<span>' + p.label + '</span><span class="preset-tag">' + p.badge + '</span>' +
+                '</button>';
+              }).join("") +
+            '</div>' +
+            (state.scheduleMode === "custom" ? (
+              '<div class="row-wrap" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border-subtle);">' +
+                '<label class="text-xs" for="custom-min-input">Minutos por dia (45 a 240):</label>' +
+                '<input id="custom-min-input" type="number" min="45" max="240" step="5" value="' + state.customMinutes + '" class="form-input" style="width:92px;padding:7px 10px;text-align:center;font-weight:700;" />' +
+                '<span class="text-xs" style="color:var(--emerald-300);">(' + formatMinutesAsHours(cfg.totalMin) + '/dia • 25m IA + 5m Feedback + SRS/Input proporcionais)</span>' +
+              '</div>'
+            ) : '') +
+          '</section>' +
+
+          shiftsHtml +
+        '</div>';
+      }
+
+      function renderFlashcardsTab() {
+        var dueCards = getDueFlashcards();
+        var hardCards = getHardFlashcards();
+        var filtered = getFilteredFlashcards();
+        var learned = getLearnedCount();
+        var activeCard = state.flashcardFilter === "all"
+          ? (filtered[allFilterIndex % Math.max(1, filtered.length)] || null)
+          : (filtered[0] || null);
+
+        var cardAreaHtml = "";
+        if (activeCard) {
+          var nextGoodDays = activeCard.interval < 1 ? 1 : Math.round(activeCard.interval * 2);
+          var nextEasyDays = activeCard.interval < 1 ? 4 : Math.round(activeCard.interval * 2.5);
+
+          cardAreaHtml = '<div class="fc-stage">' +
+            '<div class="fc-perspective" data-action="flip-card">' +
+              '<div id="fc-inner" class="fc-inner ' + (currentCardFlipped ? "flipped" : "") + '">' +
+
+                '<!-- FRENTE DO CARTÃO -->' +
+                '<div class="fc-face">' +
+                  '<div class="row-between">' +
+                    '<span class="badge ' + (activeCard.isHard ? "badge-amber" : "badge-indigo") + '">' +
+                      (activeCard.isHard ? "⚡ Difícil (Fila 17h20)" : "Inglês (Frente)") +
+                    '</span>' +
+                    '<button class="btn btn-sm ' + (state.showPronunciation ? "btn-primary" : "btn-secondary") + '" data-action="toggle-pron">' +
+                      '👁️ ' + (state.showPronunciation ? "Ocultar Pronúncia" : "Ver Pronúncia") +
+                    '</button>' +
+                  '</div>' +
+
+                  '<div class="stack-sm" style="align-items:center;margin:auto 0;">' +
+                    '<div class="fc-main-phrase">"' + renderClickableWords(activeCard.en) + '"</div>' +
+                    (state.showPronunciation && activeCard.pronunciation ? '<div class="pron-pill">🗣️ ' + escapeHtml(activeCard.pronunciation) + '</div>' : '') +
+                    '<div class="fc-example">' + renderClickableWords(activeCard.example) + '</div>' +
+                    (state.showPronunciation && activeCard.tip ? '<div class="tip-compact">💡 <strong>Dica / Letras Mudas:</strong> ' + escapeHtml(activeCard.tip) + '</div>' : '') +
+                    '<div class="text-xs text-muted" style="text-align:center;margin-top:4px;">Toque em qualquer palavra para ouvir devagar (0.6x) • Toque fora para virar</div>' +
+                  '</div>' +
+
+                  '<div class="row-wrap" style="justify-content:center;">' +
+                    '<button class="btn btn-primary btn-sm" data-action="speak-card" data-id="' + activeCard.id + '" data-rate="1.0">🔊 Ouvir (1.0x)</button>' +
+                    '<button class="btn btn-secondary btn-sm" data-action="speak-card" data-id="' + activeCard.id + '" data-rate="0.75">🐢 Lento (0.75x)</button>' +
+                  '</div>' +
+                '</div>' +
+
+                '<!-- VERSO DO CARTÃO -->' +
+                '<div class="fc-face fc-back">' +
+                  '<div class="row-between">' +
+                    '<span class="badge badge-emerald">Significado Natural (Verso)</span>' +
+                    '<button class="btn btn-secondary btn-sm" data-action="speak-card-example" data-id="' + activeCard.id + '">🔊 Ouvir Exemplo</button>' +
+                  '</div>' +
+
+                  '<div class="stack-md" style="align-items:center;margin:auto 0;text-align:center;">' +
+                    '<div style="font-size:1.5rem;font-weight:800;color:var(--emerald-300);line-height:1.3;">' + escapeHtml(activeCard.pt) + '</div>' +
+                    (activeCard.pronunciation ? '<div class="pron-pill">🗣️ ' + escapeHtml(activeCard.pronunciation) + '</div>' : '') +
+                    '<div class="tip-compact" style="text-align:left;width:100%;">💡 <strong>Dica de Uso / Pronúncia:</strong><br/>' + escapeHtml(activeCard.tip || "Pratique o ritmo natural da frase inteira.") + '</div>' +
+                  '</div>' +
+
+                  '<div class="text-xs text-muted" style="text-align:center;">Avalie abaixo para agendar a próxima revisão SRS</div>' +
+                '</div>' +
+
+              '</div>' +
+            '</div>' +
+
+            '<div id="srs-rating-grid" class="rating-grid ' + (currentCardFlipped ? "" : "disabled") + '">' +
+              '<button class="rate-btn rate-hard" data-action="rate-card" data-id="' + activeCard.id + '" data-rating="hard"><span>Difícil</span><small>10 min + Fila 17h20</small></button>' +
+              '<button class="rate-btn rate-good" data-action="rate-card" data-id="' + activeCard.id + '" data-rating="good"><span>Bom</span><small>' + nextGoodDays + (nextGoodDays === 1 ? " dia" : " dias") + '</small></button>' +
+              '<button class="rate-btn rate-easy" data-action="rate-card" data-id="' + activeCard.id + '" data-rating="easy"><span>Fácil</span><small>' + nextEasyDays + ' dias</small></button>' +
+            '</div>' +
+            (!currentCardFlipped ? '<p class="text-xs text-muted" style="text-align:center;margin-top:8px;">Vire o cartão para liberar os botões de avaliação SRS.</p>' : '') +
+          '</div>';
+        } else {
+          cardAreaHtml = '<div class="card fc-stage" style="text-align:center;padding:32px 22px;border-color:rgba(52,211,153,0.35);">' +
+            '<div style="font-size:2.4rem;margin-bottom:8px;">🎉</div>' +
+            '<h3 class="h2-title">' + (state.flashcardFilter === "hard" ? "Nenhum cartão difícil pendente!" : "Revisão SRS de hoje concluída!") + '</h3>' +
+            '<p class="text-muted" style="margin-top:6px;">' +
+              (state.flashcardFilter === "hard"
+                ? "Você zerou a fila rápida das 17h20. Excelente trabalho!"
+                : "Todos os cartões estão agendados no intervalo ideal (" + learned + " aprendidos).") +
+            '</p>' +
+            '<div class="row-wrap" style="justify-content:center;margin-top:18px;">' +
+              '<button class="btn btn-primary" data-action="switch-tab" data-tab="shadowing">Ir para Input & Shadowing</button>' +
+              '<button class="btn btn-secondary" data-action="review-all-now">Fazer Revisão Extra</button>' +
+            '</div>' +
+          '</div>';
+        }
+
+        return '<div class="stack-lg">' +
+          '<div class="row-between">' +
+            '<div>' +
+              '<h1 class="h1-title">🗂️ Arena de Flashcards (SRS)</h1>' +
+              '<p class="text-muted">Toque em qualquer palavra em inglês para ouvir só ela bem devagar (0.6x).</p>' +
+            '</div>' +
+            '<button class="btn btn-primary" data-action="open-new-card">+ Novo Flashcard</button>' +
+          '</div>' +
+
+          '<div class="row-wrap">' +
+            '<button class="filter-pill ' + (state.flashcardFilter === "due" ? "active-indigo" : "") + '" data-action="set-fc-filter" data-filter="due">' +
+              '<span>Para Revisar Hoje</span><span class="preset-tag">' + dueCards.length + '</span>' +
+            '</button>' +
+            '<button class="filter-pill ' + (state.flashcardFilter === "hard" ? "active-amber" : "") + '" data-action="set-fc-filter" data-filter="hard">' +
+              '<span>⚡ Revisão Rápida (Difíceis • 17h20)</span><span class="preset-tag">' + hardCards.length + '</span>' +
+            '</button>' +
+            '<button class="filter-pill ' + (state.flashcardFilter === "all" ? "active-slate" : "") + '" data-action="set-fc-filter" data-filter="all">' +
+              '<span>Todos</span><span class="preset-tag">' + state.flashcards.length + '</span>' +
+            '</button>' +
+          '</div>' +
+
+          cardAreaHtml +
+
+          '<section class="card">' +
+            '<div class="row-between" style="margin-bottom:10px;">' +
+              '<h3 class="h3-title">Seu Baralho Completo (' + state.flashcards.length + ' cartões • ' + learned + ' aprendidos)</h3>' +
+              '<span class="text-xs text-muted">Salvo automaticamente</span>' +
+            '</div>' +
+            '<div class="deck-list">' +
+              state.flashcards.map(function (c) {
+                return '<div class="deck-item">' +
+                  '<div style="min-width:0;">' +
+                    '<div style="font-weight:700;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
+                      (c.isHard ? '<span style="color:var(--amber-400);">⚡ </span>' : '') + escapeHtml(c.en) +
+                    '</div>' +
+                    '<div class="text-xs text-muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(c.pt) + '</div>' +
+                  '</div>' +
+                  '<div class="row-wrap" style="flex-shrink:0;">' +
+                    '<button class="btn btn-secondary btn-icon" data-action="speak-card" data-id="' + c.id + '" data-rate="0.95" title="Ouvir">🔊</button>' +
+                    '<button class="btn btn-rose btn-icon" data-action="delete-card" data-id="' + c.id + '" title="Excluir">🗑️</button>' +
+                  '</div>' +
+                '</div>';
+              }).join("") +
+            '</div>' +
+          '</section>' +
+        '</div>';
+      }
+
+      function renderShadowingTab() {
+        var dayData = getCurrentDayData();
+
+        return '<div class="stack-lg">' +
+          '<div class="row-between">' +
+            '<div>' +
+              '<span class="badge badge-sky" style="margin-bottom:6px;">Estúdio de Input & Shadowing • A1</span>' +
+              '<h1 class="h1-title">Dia ' + dayData.day + ': ' + escapeHtml(dayData.title) + '</h1>' +
+              '<p class="text-muted">' + escapeHtml(dayData.focus) + '</p>' +
+            '</div>' +
+            '<div class="row-wrap">' +
+              MODULE_1_DAYS.map(function (d) {
+                return '<button class="btn btn-sm ' + (d.day === state.selectedDay ? "btn-primary" : "btn-secondary") + '" data-action="select-day" data-day="' + d.day + '">D' + d.day + '</button>';
+              }).join("") +
+            '</div>' +
+          '</div>' +
+
+          (state.busMode ? (
+            '<div class="bus-banner">' +
+              '<strong>🚌 Modo Ônibus Ativo (Shadowing Silencioso):</strong> Com fone de ouvido, acompanhe o áudio abaixo <strong>repetindo mentalmente ou mexendo apenas os lábios sem emitir som</strong> durante a pausa de 2,5 segundos. Isso treina ritmo e pronúncia sem chamar atenção no transporte.' +
+            '</div>'
+          ) : '') +
+
+          '<section class="card">' +
+            '<div class="row-between" style="margin-bottom:14px;">' +
+              '<div>' +
+                '<h2 class="h2-title">🧩 Chunks Situacionais do Dia (' + dayData.chunks.length + ')</h2>' +
+                '<p class="text-xs text-muted">Toque em qualquer palavra em inglês para ouvir só ela bem devagar (0.6x).</p>' +
+              '</div>' +
+              '<button class="toggle-chip ' + (state.showPronunciation ? "on" : "") + '" data-action="toggle-pron">' +
+                '👁️ ' + (state.showPronunciation ? "Ocultar Pronúncia" : "Ver Pronúncia") +
+              '</button>' +
+            '</div>' +
+
+            '<div class="chunks-grid">' +
+              dayData.chunks.map(function (ch, idx) {
+                return '<div class="chunk-card">' +
+                  '<div>' +
+                    '<div class="row-between" style="align-items:flex-start;">' +
+                      '<div style="font-size:1.02rem;font-weight:800;color:#c7d2fe;">' + renderClickableWords(ch.en) + '</div>' +
+                      '<button class="btn btn-secondary btn-icon" data-action="speak-chunk" data-idx="' + idx + '" title="Ouvir chunk">🔊</button>' +
+                    '</div>' +
+                    (state.showPronunciation && ch.pronunciation ? '<div class="pron-pill" style="font-size:0.78rem;padding:4px 10px;">🗣️ ' + escapeHtml(ch.pronunciation) + '</div>' : '') +
+                    '<div class="text-sm" style="margin-top:6px;color:#e2e8f0;">' + escapeHtml(ch.pt) + '</div>' +
+                    '<div class="text-xs text-muted" style="font-style:italic;margin-top:5px;">"' + renderClickableWords(ch.example) + '"</div>' +
+                    (state.showPronunciation && ch.tip ? '<div class="tip-compact" style="text-align:left;margin-top:7px;">💡 ' + escapeHtml(ch.tip) + '</div>' : '') +
+                  '</div>' +
+                  '<div class="row-between" style="padding-top:8px;border-top:1px solid var(--border-subtle);">' +
+                    '<span class="text-xs text-muted" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escapeHtml(ch.tip) + '</span>' +
+                    '<button class="btn btn-primary btn-sm" data-action="add-chunk-srs" data-idx="' + idx + '">+ SRS</button>' +
+                  '</div>' +
+                '</div>';
+              }).join("") +
+            '</div>' +
+          '</section>' +
+
+          '<section class="card">' +
+            '<div class="row-between" style="padding-bottom:14px;border-bottom:1px solid var(--border-subtle);margin-bottom:14px;">' +
+              '<div>' +
+                '<h2 class="h2-title">🎧 Diálogo & Player de Shadowing</h2>' +
+                '<p class="text-xs text-muted">Toque em uma palavra para ouvir em 0.6x ou no bloco da fala para iniciar dali.</p>' +
+              '</div>' +
+              '<div class="row-wrap">' +
+                '<button id="btn-play-dialogue" class="btn ' + (isPlayingDialogue ? "btn-rose" : "btn-primary") + '" data-action="toggle-dialogue">' +
+                  (isPlayingDialogue ? "⏹ Parar Diálogo" : "▶ Ouvir Diálogo Completo") +
+                '</button>' +
+                '<div class="row-wrap" style="background:var(--bg-surface-2);padding:4px;border-radius:12px;border:1px solid var(--border-subtle);">' +
+                  [0.75, 0.85, 1.0].map(function (r) {
+                    return '<button class="btn btn-sm ' + (state.speechRate === r ? "btn-primary" : "") + '" style="padding:5px 9px;" data-action="set-rate" data-rate="' + r + '">' + r + 'x</button>';
+                  }).join("") +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="row-wrap" style="margin-bottom:14px;">' +
+              '<button class="toggle-chip ' + (state.busMode ? "on" : "") + '" data-action="toggle-bus">🚌 Modo Ônibus (Silencioso)</button>' +
+              '<button class="toggle-chip ' + (state.shadowingMode ? "on-indigo" : "") + '" data-action="toggle-shadowing">⏱️ Pausa Shadowing (2.5s)</button>' +
+              '<button class="toggle-chip ' + (state.showPronunciation ? "on" : "") + '" data-action="toggle-pron">👁️ Ver Pronúncia</button>' +
+              '<button class="toggle-chip ' + (state.showTranslation ? "on-indigo" : "") + '" data-action="toggle-translation">🇧🇷 Tradução</button>' +
+            '</div>' +
+
+            '<div class="stack-sm">' +
+              dayData.dialogue.map(function (line, idx) {
+                var isUser = line.speaker === "B";
+                return '<div id="dialogue-line-' + idx + '" class="dialogue-line ' + (isUser ? "user-line" : "other-line") + '" data-action="play-from" data-idx="' + idx + '">' +
+                  '<div class="row-between" style="margin-bottom:4px;">' +
+                    '<span class="text-xs" style="font-weight:800;text-transform:uppercase;color:' + (isUser ? "var(--emerald-400)" : "var(--sky-400)") + ';">' + escapeHtml(line.name) + '</span>' +
+                    '<span id="shadow-badge-' + idx + '" class="hidden"></span>' +
+                  '</div>' +
+                  '<div style="font-size:0.98rem;font-weight:600;color:#fff;">' + renderClickableWords(line.en) + '</div>' +
+                  (state.showPronunciation && line.pron ? '<div class="text-xs" style="color:var(--sky-300);margin-top:4px;font-weight:600;">🗣️ ' + escapeHtml(line.pron) + '</div>' : '') +
+                  (state.showTranslation ? '<div class="text-xs text-muted" style="margin-top:3px;">' + escapeHtml(line.pt) + '</div>' : '') +
+                '</div>';
+              }).join("") +
+            '</div>' +
+
+            '<div class="row-between" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border-subtle);">' +
+              '<span class="text-xs text-muted">Pronto para aplicar esses chunks na conversação das 20h00?</span>' +
+              '<button class="btn btn-emerald" data-action="switch-tab" data-tab="tutor">Ir para Tutor IA →</button>' +
+            '</div>' +
+          '</section>' +
+        '</div>';
+      }
+
+      function renderTutorTab() {
+        var dayData = getCurrentDayData();
+        var mission = generateDailyMissionPrompt(dayData);
+        var master = getMasterGemPrompt();
+
+        return '<div class="stack-lg">' +
+          '<div>' +
+            '<span class="badge badge-emerald" style="margin-bottom:6px;">Conversação das 20h00 • Gemini Live</span>' +
+            '<h1 class="h1-title">🤖 Ponte para o Tutor IA</h1>' +
+            '<p class="text-muted">Copie a missão pronta do Dia ' + dayData.day + ', cole no seu Gem e ative a voz com zero custo extra.</p>' +
+          '</div>' +
+
+          '<section class="card" style="border-color:rgba(52,211,153,0.32);">' +
+            '<div class="row-between" style="margin-bottom:12px;">' +
+              '<div>' +
+                '<span class="badge badge-indigo">Dia ' + dayData.day + ' • ' + escapeHtml(dayData.roleplayTitle) + '</span>' +
+                '<h2 class="h2-title" style="margin-top:6px;">Prompt da Missão do Dia (20h00)</h2>' +
+              '</div>' +
+              '<button class="btn btn-emerald" data-action="copy-mission">📋 Copiar Missão do Dia</button>' +
+            '</div>' +
+
+            '<pre class="prompt-box">' + escapeHtml(mission) + '</pre>' +
+
+            '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-subtle);">' +
+              '<button class="row-between" style="width:100%;color:var(--indigo-400);font-size:0.82rem;font-weight:700;" data-action="toggle-master-prompt">' +
+                '<span>⚙️ Prompt Mestre do Gem (Configuração Única)</span>' +
+                '<span>' + (showMasterPrompt ? "▲ Ocultar" : "▼ Expandir") + '</span>' +
+              '</button>' +
+              (showMasterPrompt ? (
+                '<div class="stack-sm" style="margin-top:10px;">' +
+                  '<pre class="prompt-box">' + escapeHtml(master) + '</pre>' +
+                  '<div><button class="btn btn-secondary btn-sm" data-action="copy-master">📋 Copiar Prompt Mestre</button></div>' +
+                '</div>'
+              ) : '') +
+            '</div>' +
+          '</section>' +
+
+          '<section id="feedback-importer-section" class="card" style="border-color:rgba(251,191,36,0.3);">' +
+            '<h2 class="h2-title" style="margin-bottom:4px;">✨ Importador de Correções em Lote</h2>' +
+            '<p class="text-xs text-muted" style="margin-bottom:12px;">Cole várias linhas de uma vez no formato <code>Frase corrigida | Tradução</code> ou <code>Errado -&gt; Certo</code>. Cada linha vira automaticamente um flashcard no seu SRS!</p>' +
+            '<form id="form-bulk-import" class="stack-sm">' +
+              '<textarea id="bulk-corrections-input" class="form-textarea" rows="5" placeholder="Exemplo (uma correção por linha):&#10;Could I have a coffee, please? | Eu poderia pedir um café, por favor?&#10;I have 25 years -> I am 25 years old | Para idade em inglês usamos o verbo to be&#10;I am on my way | Estou a caminho"></textarea>' +
+              '<div class="row-between">' +
+                '<span class="text-xs text-muted">Entram direto na fila das 06h00 e Difíceis (17h20).</span>' +
+                '<button type="submit" class="btn btn-amber">🪄 Transformar Tudo em Flashcards SRS</button>' +
+              '</div>' +
+            '</form>' +
+          '</section>' +
+        '</div>';
+      }
+
+      function renderRoadmapTab() {
+        var cfg = getActiveScheduleConfig();
+        var totalHours = (state.totalMinutesStudied / 60).toFixed(1);
+        var pct = Math.min(100, (state.totalMinutesStudied / (600 * 60)) * 100);
+        var totalForecast = calculateForecastText(600, cfg.totalMin);
+
+        return '<div class="stack-lg">' +
+          '<div class="row-between">' +
+            '<div>' +
+              '<h1 class="h1-title">🗺️ Mapa da Fluência (A1 ao B2)</h1>' +
+              '<p class="text-muted">Prazos calculados para sua carga atual de <strong style="color:var(--emerald-300);">' + formatMinutesAsHours(cfg.totalMin) + '/dia</strong>.</p>' +
+            '</div>' +
+            '<button class="btn btn-secondary btn-sm" data-action="switch-tab" data-tab="today">Alterar Carga Diária</button>' +
+          '</div>' +
+
+          '<section class="card">' +
+            '<div class="row-between" style="margin-bottom:10px;">' +
+              '<div>' +
+                '<div class="text-xs text-muted">Progresso Geral Rumo ao B2 Sólido (600h)</div>' +
+                '<div style="font-size:1.5rem;font-weight:800;margin-top:2px;">' + totalHours + 'h <span class="text-muted" style="font-weight:500;">/ 600 horas</span></div>' +
+              '</div>' +
+              '<span class="badge badge-emerald">Previsão Total: ' + totalForecast + '</span>' +
+            '</div>' +
+            '<div class="progress-track" style="height:12px;"><div class="progress-fill" style="width:' + Math.max(pct, state.totalMinutesStudied > 0 ? 1.5 : 0) + '%;"></div></div>' +
+          '</section>' +
+
+          '<div class="stack-md">' +
+            ROADMAP_LEVELS.map(function (lvl) {
+              var active = lvl.status === "active";
+              var dur = calculateForecastText(lvl.hours, cfg.totalMin);
+              return '<section class="card" style="' + (active ? "border-color:rgba(129,140,248,0.45);" : "opacity:0.9;") + '">' +
+                '<div class="row-between" style="margin-bottom:12px;">' +
+                  '<div class="row-wrap" style="gap:12px;">' +
+                    '<div class="level-badge ' + (active ? "active" : "locked") + '">' + lvl.code + '</div>' +
+                    '<div>' +
+                      '<h3 class="h2-title">' + escapeHtml(lvl.name) + '</h3>' +
+                      '<div class="text-xs text-muted" style="margin-top:2px;">' +
+                        '<strong style="color:var(--emerald-300);">⏱️ ' + dur + ' (' + lvl.hours + 'h)</strong> • 🤖 Tutor IA: ' + escapeHtml(lvl.tutorMix) +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<span class="badge ' + (active ? "badge-emerald" : "badge-slate") + '">' + (active ? "Em Andamento" : "Na Sequência") + '</span>' +
+                '</div>' +
+                '<ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">' +
+                  lvl.milestones.map(function (m) {
+                    return '<li class="text-sm" style="color:var(--text-secondary);">✓ ' + escapeHtml(m) + '</li>';
+                  }).join("") +
+                '</ul>' +
+              '</section>';
+            }).join("") +
+          '</div>' +
+
+          '<section class="card" style="border-color:rgba(129,140,248,0.32);">' +
+            '<div class="row-between">' +
+              '<div>' +
+                '<h3 class="h2-title">💾 Backup Local (PC ↔ Celular)</h3>' +
+                '<p class="text-xs text-muted" style="margin-top:3px;">Exporte seu progresso e flashcards em JSON para transferir sem pagar banco de dados.</p>' +
+              '</div>' +
+              '<div class="row-wrap">' +
+                '<button class="btn btn-primary btn-sm" data-action="export-backup">⬇️ Exportar Backup (.json)</button>' +
+                '<label class="btn btn-secondary btn-sm" style="cursor:pointer;">' +
+                  '⬆️ Importar Backup (.json)' +
+                  '<input type="file" id="roadmap-import-file" accept=".json" class="hidden" />' +
+                '</label>' +
+              '</div>' +
+            '</div>' +
+          '</section>' +
+        '</div>';
+      }
+
+      function renderCurrentTab() {
+        var content = document.getElementById("app-content");
+        if (!content) return;
+        var html = "";
+        if (state.currentTab === "today") html = renderTodayTab();
+        else if (state.currentTab === "flashcards") html = renderFlashcardsTab();
+        else if (state.currentTab === "shadowing") html = renderShadowingTab();
+        else if (state.currentTab === "tutor") html = renderTutorTab();
+        else if (state.currentTab === "roadmap") html = renderRoadmapTab();
+        else html = renderTodayTab();
+
+        content.innerHTML = html;
+        renderNavigation();
+        updateGlobalStats();
+      }
+
+      /* =====================================================================
+         13. TAB SWITCHING, BACKUP & MODALS
+         ===================================================================== */
+      function switchTab(tabId) {
+        stopDialoguePlayback();
+        var scrollTarget = null;
+        if (tabId === "tutor-feedback") {
+          state.currentTab = "tutor";
+          scrollTarget = "feedback-importer-section";
+        } else if (tabId === "flashcards-hard") {
+          state.currentTab = "flashcards";
+          state.flashcardFilter = "hard";
+          currentCardFlipped = false;
+        } else if (tabId === "shadowing-bus") {
+          state.currentTab = "shadowing";
+          state.busMode = true;
+        } else if (tabId === "shadowing-voice") {
+          state.currentTab = "shadowing";
+          state.busMode = false;
+        } else {
+          state.currentTab = tabId;
+        }
+        saveStateSafely();
+        renderCurrentTab();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (scrollTarget) {
+          setTimeout(function () {
+            var el = document.getElementById(scrollTarget);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 100);
+        }
+      }
+
+      function exportBackupFile() {
+        try {
+          var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "english-master-backup-" + getTodayDateString() + ".json";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast("Backup JSON exportado com sucesso!", "success");
+        } catch (err) {
+          showToast("Não foi possível exportar o arquivo.", "error");
+        }
+      }
+
+      function handleImportBackupFile(file) {
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            var parsed = JSON.parse(e.target.result);
+            if (!parsed || !Array.isArray(parsed.flashcards)) {
+              throw new Error("Formato inválido");
+            }
+            stopAllTimers();
+            stopDialoguePlayback();
+            state = Object.assign({}, getDefaultState(), parsed);
+            state.flashcards = enrichFlashcards(parsed.flashcards);
+            saveStateSafely();
+            var mb = document.getElementById("modal-backup");
+            if (mb) mb.classList.add("hidden");
+            renderCurrentTab();
+            showToast("Backup restaurado com sucesso!", "success");
+          } catch (err) {
+            showToast("Arquivo JSON inválido.", "error");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      /* =====================================================================
+         14. CENTRAL EVENT DELEGATION (ZERO INLINE ONCLICK)
+         ===================================================================== */
+      document.addEventListener("click", function (e) {
+        var target = e.target.closest("[data-action]");
+        if (!target) return;
+
+        var action = target.getAttribute("data-action");
+
+        // Individual word pronunciation (0.6x) — never flips card or plays full dialogue
+        if (action === "speak-word") {
+          e.stopPropagation();
+          speakSingleWord(target.getAttribute("data-word"), target);
+          return;
+        }
+
+        // Toggle pronunciation — stopPropagation so clicking inside card front doesn't flip
+        if (action === "toggle-pron") {
+          e.stopPropagation();
+          state.showPronunciation = !state.showPronunciation;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "speak-card") {
+          e.stopPropagation();
+          var cardId = target.getAttribute("data-id");
+          var rate = parseFloat(target.getAttribute("data-rate")) || 1.0;
+          var card = state.flashcards.find(function (c) { return c.id === cardId; });
+          if (card) speakText(card.en, rate);
+          return;
+        }
+
+        if (action === "speak-card-example") {
+          e.stopPropagation();
+          var cid = target.getAttribute("data-id");
+          var cObj = state.flashcards.find(function (c) { return c.id === cid; });
+          if (cObj) speakText(cObj.example || cObj.en, 0.95);
+          return;
+        }
+
+        if (action === "flip-card") {
+          currentCardFlipped = !currentCardFlipped;
+          var inner = document.getElementById("fc-inner");
+          var grid = document.getElementById("srs-rating-grid");
+          if (inner) inner.classList.toggle("flipped", currentCardFlipped);
+          if (grid) grid.classList.toggle("disabled", !currentCardFlipped);
+          return;
+        }
+
+        if (action === "rate-card") {
+          rateFlashcard(target.getAttribute("data-id"), target.getAttribute("data-rating"));
+          return;
+        }
+
+        if (action === "delete-card") {
+          var delId = target.getAttribute("data-id");
+          state.flashcards = state.flashcards.filter(function (c) { return c.id !== delId; });
+          currentCardFlipped = false;
+          allFilterIndex = 0;
+          saveStateSafely();
+          showToast("Flashcard removido.", "info");
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "set-fc-filter") {
+          state.flashcardFilter = target.getAttribute("data-filter");
+          currentCardFlipped = false;
+          allFilterIndex = 0;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "review-all-now") {
+          state.flashcards.forEach(function (c) { c.nextReview = 0; });
+          state.flashcardFilter = "due";
+          currentCardFlipped = false;
+          saveStateSafely();
+          showToast("Todos os cartões liberados para revisão extra!", "info");
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "switch-tab") {
+          switchTab(target.getAttribute("data-tab"));
+          return;
+        }
+
+        if (action === "select-day") {
+          stopDialoguePlayback();
+          state.selectedDay = parseInt(target.getAttribute("data-day"), 10) || 1;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "set-schedule") {
+          stopAllTimers();
+          state.scheduleMode = target.getAttribute("data-mode");
+          if (state.scheduleMode === "bus_night") state.busMode = true;
+          saveStateSafely();
+          var cfg = getActiveScheduleConfig();
+          showToast("Rotina: " + cfg.name + " • Previsão B2: " + calculateForecastText(600, cfg.totalMin), "info");
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "toggle-block") {
+          toggleBlockCompletion(target.getAttribute("data-id"), false);
+          return;
+        }
+
+        if (action === "toggle-timer") {
+          toggleTimer(target.getAttribute("data-id"));
+          return;
+        }
+
+        if (action === "reset-timer") {
+          resetTimer(target.getAttribute("data-id"));
+          return;
+        }
+
+        if (action === "speak-chunk") {
+          var chIdx = parseInt(target.getAttribute("data-idx"), 10);
+          var ch = getCurrentDayData().chunks[chIdx];
+          if (ch) speakText(ch.en, state.speechRate);
+          return;
+        }
+
+        if (action === "add-chunk-srs") {
+          var aIdx = parseInt(target.getAttribute("data-idx"), 10);
+          var item = getCurrentDayData().chunks[aIdx];
+          if (item) addCardToSRS(item.en, item.example, item.pt, item.pronunciation, item.tip, false, false);
+          return;
+        }
+
+        if (action === "toggle-dialogue") {
+          if (isPlayingDialogue) stopDialoguePlayback();
+          else playDialogueFrom(0);
+          return;
+        }
+
+        if (action === "play-from") {
+          var lineIdx = parseInt(target.getAttribute("data-idx"), 10) || 0;
+          playDialogueFrom(lineIdx);
+          return;
+        }
+
+        if (action === "set-rate") {
+          state.speechRate = parseFloat(target.getAttribute("data-rate")) || 0.85;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "toggle-bus") {
+          state.busMode = !state.busMode;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "toggle-shadowing") {
+          state.shadowingMode = !state.shadowingMode;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "toggle-translation") {
+          state.showTranslation = !state.showTranslation;
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "copy-mission") {
+          copyToClipboard(generateDailyMissionPrompt(getCurrentDayData()), "Missão do Dia copiada! Cole no seu Gem e ative o Gemini Live.");
+          return;
+        }
+
+        if (action === "toggle-master-prompt") {
+          showMasterPrompt = !showMasterPrompt;
+          renderCurrentTab();
+          return;
+        }
+
+        if (action === "copy-master") {
+          copyToClipboard(getMasterGemPrompt(), "Prompt Mestre do Gem copiado!");
+          return;
+        }
+
+        if (action === "open-new-card") {
+          var mNew = document.getElementById("modal-new-card");
+          if (mNew) mNew.classList.remove("hidden");
+          var inp = document.getElementById("new-card-en");
+          if (inp) inp.focus();
+          return;
+        }
+
+        if (action === "close-new-card") {
+          var mClose = document.getElementById("modal-new-card");
+          if (mClose) mClose.classList.add("hidden");
+          return;
+        }
+
+        if (action === "open-backup") {
+          var rc = document.getElementById("reset-confirm-box");
+          if (rc) rc.classList.add("hidden");
+          var mb = document.getElementById("modal-backup");
+          if (mb) mb.classList.remove("hidden");
+          return;
+        }
+
+        if (action === "close-backup") {
+          var mbc = document.getElementById("modal-backup");
+          if (mbc) mbc.classList.add("hidden");
+          return;
+        }
+
+        if (action === "export-backup") {
+          exportBackupFile();
+          return;
+        }
+
+        if (action === "ask-reset") {
+          var rBox = document.getElementById("reset-confirm-box");
+          if (rBox) rBox.classList.remove("hidden");
+          return;
+        }
+
+        if (action === "cancel-reset") {
+          var rBox2 = document.getElementById("reset-confirm-box");
+          if (rBox2) rBox2.classList.add("hidden");
+          return;
+        }
+
+        if (action === "confirm-reset") {
+          stopAllTimers();
+          stopDialoguePlayback();
+          try {
+            window.localStorage.removeItem(PRIMARY_STORAGE_KEY);
+            window.localStorage.removeItem("english_master_data");
+            window.localStorage.removeItem("english_master_state_v1");
+          } catch (err) {}
+          state = getDefaultState();
+          saveStateSafely();
+          var mb2 = document.getElementById("modal-backup");
+          if (mb2) mb2.classList.add("hidden");
+          renderCurrentTab();
+          showToast("Dados resetados para o estado inicial.", "info");
+          return;
+        }
+      });
+
+      document.addEventListener("change", function (e) {
+        if (e.target.id === "custom-min-input") {
+          var val = Math.min(240, Math.max(45, parseInt(e.target.value, 10) || 45));
+          stopAllTimers();
+          state.customMinutes = val;
+          state.scheduleMode = "custom";
+          ["cust_srs", "cust_input", "cust_ai", "cust_feedback"].forEach(function (id) {
+            delete activeTimers[id];
+          });
+          saveStateSafely();
+          renderCurrentTab();
+          return;
+        }
+        if (e.target.id === "modal-import-file" || e.target.id === "roadmap-import-file") {
+          if (e.target.files && e.target.files[0]) {
+            handleImportBackupFile(e.target.files[0]);
+            e.target.value = "";
+          }
+        }
+      });
+
+      document.addEventListener("submit", function (e) {
+        if (e.target.id === "form-new-card") {
+          e.preventDefault();
+          var en = document.getElementById("new-card-en").value;
+          var ex = document.getElementById("new-card-example").value;
+          var pt = document.getElementById("new-card-pt").value;
+          var pr = document.getElementById("new-card-pron").value;
+          var tp = document.getElementById("new-card-tip").value;
+          addCardToSRS(en, ex, pt, pr, tp, false, false);
+          e.target.reset();
+          var m = document.getElementById("modal-new-card");
+          if (m) m.classList.add("hidden");
+          return;
+        }
+
+        if (e.target.id === "form-bulk-import") {
+          e.preventDefault();
+          var ta = document.getElementById("bulk-corrections-input");
+          var raw = (ta ? ta.value : "").trim();
+          if (!raw) {
+            showToast("Cole pelo menos uma linha de correção.", "warning");
+            return;
+          }
+          var lines = raw.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+          var added = 0;
+
+          lines.forEach(function (line) {
+            var clean = line.replace(/^([-*•]|\d+[.)])\s*/, "").trim();
+            if (!clean) return;
+            var en = "";
+            var pt = "";
+            var tip = "Correção da conversação das 20h00 (Gemini Live).";
+
+            if (clean.indexOf("->") !== -1) {
+              var partsArrow = clean.split("->");
+              var wrong = partsArrow[0].trim();
+              var rightFull = partsArrow.slice(1).join("->").trim();
+              if (rightFull.indexOf("|") !== -1) {
+                var rp = rightFull.split("|");
+                en = rp[0].trim();
+                pt = rp[1].trim() || ('Substitui: "' + wrong + '"');
+                tip = 'Você disse: "' + wrong + '" → Forma natural: "' + en + '"';
+              } else {
+                en = rightFull || clean;
+                pt = 'Forma natural (antes: "' + wrong + '")';
+                tip = 'Atenção para não repetir "' + wrong + '".';
+              }
+            } else if (clean.indexOf("|") !== -1) {
+              var pipeParts = clean.split("|");
+              en = pipeParts[0].trim();
+              pt = (pipeParts[1] || "").trim() || "Correção da aula de conversação";
+              if (pipeParts[2]) tip = pipeParts[2].trim();
+            } else {
+              en = clean;
+              pt = "Expressão salva da aula com Tutor IA";
+            }
+
+            if (en && addCardToSRS(en, en, pt, "", tip, true, true)) {
+              added++;
+            }
+          });
+
+          if (added > 0) {
+            ta.value = "";
+            var cfg = getActiveScheduleConfig();
+            var fb = cfg.allBlocks.find(function (b) { return b.id.indexOf("feedback") !== -1; });
+            if (fb) {
+              var prog = getDayBlocksStatus(state.selectedDay);
+              if (!prog[fb.id]) {
+                prog[fb.id] = true;
+                state.totalMinutesStudied += fb.durationMin;
+                checkAndUpdateStreak();
+              }
+            }
+            saveStateSafely();
+            updateGlobalStats();
+            renderNavigation();
+            showToast(added + (added === 1 ? " correção importada" : " correções importadas") + " para o SRS!", "success");
+          } else {
+            showToast("Essas frases já estavam no seu baralho SRS.", "info");
+          }
+        }
+      });
+
+      /* =====================================================================
+         15. INITIALIZE APPLICATION SAFELY
+         ===================================================================== */
+      function initApp() {
+        try {
+          if ("speechSynthesis" in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = function () {
+              try { window.speechSynthesis.getVoices(); } catch (e) {}
+            };
+          }
+        } catch (err) {}
+        renderCurrentTab();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initApp);
+      } else {
+        initApp();
+      }
+    })();
+  </script>
+</body>
+</html>
